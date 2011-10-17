@@ -7,4 +7,15 @@ syntax on
 filetype plugin indent on
 
 " Colorscheme
-colorscheme desert
+let g:myguicolor = "zenburn"
+let g:mytermcolor = g:myguicolor
+let g:zenburn_high_Contrast=1
+execute "colorscheme ".g:mytermcolor
+if has("gui_running") 
+  if has('autocmd')
+      autocmd BufEnter *
+      \   execute "colorscheme ".g:myguicolor
+  else
+  	colorscheme nuvola
+  endif
+endif
