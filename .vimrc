@@ -70,3 +70,11 @@ if has("gui_running")
     set guioptions-=T
 endif
 
+""" Persistent undo for Vim 7.3 and above """
+if version >= 703
+	set undodir=~/.vim/.undodir
+	set undofile
+	set undolevels=1000 "maximum number of changes that can be undone
+	set undoreload=10000 "maximum number of lines to save for undo on a buffer reload
+endif
+
