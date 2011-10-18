@@ -2,9 +2,26 @@
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
-" Filetype and syntax highlighting
-syntax on
-filetype plugin indent on
+" Basic options
+set hlsearch               " Highlight search results
+set incsearch		   " Do incremental searching
+syntax on                  " Syntax highlighting
+filetype plugin indent on  " Filetype detection
+set backspace=indent,eol,start  " Backspace over everything in insert mode
+if has("vms")
+  set nobackup		" do not keep a backup file, use versions instead
+else
+  set backup		" keep a backup file
+endif
+set history=50		" keep 50 lines of command line history
+set ruler		" show the cursor position all the time
+set showcmd		" display incomplete commands
+
+" In insert mode, CTRL-U deletes the current line, while CTRL-W deletes the
+" previous word. Neither of these can be recovered by using Vim undo unless
+" CTRL-G u is used to break the undo block created by an insert mode command.
+inoremap <C-U> <C-G>u<C-U>
+inoremap <C-W> <C-G>u<C-W>
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
