@@ -1,2 +1,5 @@
 # Undo directory for persistent undo
 .undodir/
+
+# Haskellmode haddock index cache directory
+.haddock_index/

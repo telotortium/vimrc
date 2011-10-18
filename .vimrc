@@ -2,6 +2,12 @@
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
+" Set g:VIMHOME, the top-level directory of the user's Vim files. This should
+" just be the first directory in the runtimepath at startup
+if !exists('g:VIMHOME')
+	let g:VIMHOME=pathogen#split(&runtimepath)[0]
+endif
+
 " Basic options
 set hlsearch               " Highlight search results
 set incsearch		   " Do incremental searching
@@ -89,9 +95,22 @@ endif
 
 """ Persistent undo for Vim 7.3 and above """
 if version >= 703
-	set undodir=~/.vim/.undodir
+	let &undodir = g:VIMHOME . '/.undodir'
 	set undofile
 	set undolevels=1000 "maximum number of changes that can be undone
 	set undoreload=10000 "maximum number of lines to save for undo on a buffer reload
 endif
 
+"********************"
+"** PLUGIN OPTIONS **"
+"********************"
+" Haskellmode: Set default browser and Haddock index for documentation
+" browsing
+if has('win32') || has('win64')
+	let g:haddock_browser = 'start'
+elseif has('macunix')
+	let g:haddock_browser = 'open'
+else
+	let g:haddock_browser = 'xdg-open'
+endif
+let g:haddock_indexfiledir = g:VIMHOME . '/.haddock_index'
