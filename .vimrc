@@ -6,6 +6,13 @@ call pathogen#infect()
 syntax on
 filetype plugin indent on
 
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+  set mouse=a
+endif
+" Force vim to recoginize mouse
+set ttymouse=xterm2
+
 " Colorscheme
 let g:myguicolor = "zenburn"
 let g:mytermcolor = g:myguicolor
