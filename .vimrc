@@ -13,6 +13,10 @@ endif
 " Force vim to recoginize mouse
 set ttymouse=xterm2
 
+" Line numbering
+set number
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
+
 " Colorscheme
 let g:myguicolor = "zenburn"
 let g:mytermcolor = g:myguicolor
