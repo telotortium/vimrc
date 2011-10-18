@@ -116,6 +116,10 @@ endif
 let g:haddock_indexfiledir = g:VIMHOME . '/.haddock_index'
 
 
+"" SnipMate: Customize author name
+let g:snips_author='Robert Irelan'
+
+
 "" Vim-LaTeX settings:
 " IMPORTANT: grep will sometimes skip displaying the file name if you
 " search in a singe file. This will confuse Latex-Suite. Set your grep
