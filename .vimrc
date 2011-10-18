@@ -63,3 +63,10 @@ else
 
 endif " has("autocmd")
 
+" Other GUI-specific options
+if has("gui_running")
+    set guifont=Inconsolata-dz\ 8.5
+    " Remove toolbar
+    set guioptions-=T
+endif
+
