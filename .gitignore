@@ -3,3 +3,6 @@
 
 # Haskellmode haddock index cache directory
 .haddock_index/
+
+# Netrw history
+.netrwhist
