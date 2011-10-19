@@ -1,0 +1,14 @@
+\documentclass[letterpaper]{article}
+\usepackage{mymacros}
+\ifpdf
+   \usepackage[bookmarks=true,linkbordercolor={0 0 1},bookmarksnumbered=true]{hyperref}
+   \hypersetup{
+     pdfauthor={Robert Irelan},
+     pdftitle={TeX Document},
+     }
+     \usepackage{epstopdf}
+\fi
+
+\begin{document}
+
+\end{document}
