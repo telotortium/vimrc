@@ -40,15 +40,26 @@ set ttymouse=xterm2
 set number
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
 
-" Colorscheme
+" Colorscheme selection:
+" There seems to be a bug in GVim on RedHat systems where colorschemes don't
+" work correctly when they're specified from the .vimrc file: the colors are
+" incorrect. Loading the colorscheme again rectifies this for the rest of the
+" time the program is open. Therefore, I use an autocmd to load the
+" colorscheme desired the first time a file is entered in the GUI, after the
+" the autocmd can be removed.
 let g:myguicolor = "zenburn"
+let g:myguibg = "dark"
 let g:mytermcolor = g:myguicolor
 let g:zenburn_high_Contrast=1
 execute "colorscheme ".g:mytermcolor
 if has("gui_running") 
   if has('autocmd')
+      augroup colorscheme
+      au!
       autocmd BufEnter *
-      \   execute "colorscheme ".g:myguicolor
+      \   execute "colorscheme ".g:myguicolor." | set background=".g:myguibg |
+      \   au! colorscheme 
+      augroup END
   else
   	colorscheme nuvola
   endif
