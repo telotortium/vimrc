@@ -3,7 +3,7 @@
 setlocal tabstop=8 shiftwidth=2 smarttab expandtab softtabstop=2 textwidth=79 formatoptions=croq1t tagrelative
 setlocal spell spelllang=en_us
 autocmd BufWritePre * :%s/\s\+$//e
-autocmd BufWritePost * silent :execute "!cd \"%:p:h\"; ctags-lock * >/dev/null 2>&1 &"
+autocmd BufWritePost * silent call system("echo cd " . shellescape(expand('%:p:h')) . "';' ctags-lock --sort=foldcase -R . '>/dev/null 2>&1' | at now")
 " TIP: if you write your \label's as \label{fig:something}, then if you
 " type in \ref{fig: and press <C-n> you will automatically cycle through
 " all the figure labels. Very useful!
