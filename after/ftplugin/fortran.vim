@@ -5,8 +5,7 @@ let b:fortran_do_enddo = 1  " Enable indentation for all do loops; I can fix non
 
 autocmd! * <buffer>
 " Highlight long lines
-autocmd BufEnter <buffer> highlight fortranLongLine term=reverse ctermbg=4 guibg=DarkRed
-autocmd BufEnter <buffer> match fortranLongLine '\%>72v.\+'
+autocmd BufEnter <buffer> highlight fortranSerialNumber term=reverse ctermbg=DarkRed guibg=DarkRed
 " Delete trailing whitespace
 autocmd BufWritePre <buffer> :%s/\s\+$//e
 " Update ctags file
