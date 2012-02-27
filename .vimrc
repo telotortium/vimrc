@@ -9,19 +9,37 @@ if !exists('g:VIMHOME')
 endif
 
 " Basic options
-set hlsearch               " Highlight search results
-set incsearch		   " Do incremental searching
-syntax on                  " Syntax highlighting
-filetype plugin indent on  " Filetype detection
+set encoding=utf-8		" Make UTF-8 the default
+set hlsearch			" Highlight search results
+set incsearch			" Do incremental searching
+set showmatch			" Show matching brackets on insert
+syntax on               	" Syntax highlighting
+filetype plugin indent on	" Filetype detection
 set backspace=indent,eol,start  " Backspace over everything in insert mode
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file
-endif
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
+set backup			" Keep a backup file
+set history=50			" Keep 50 lines of command line history
+set ruler			" Show the cursor position all the time
+set showcmd			" Display incomplete commands
+set wildmenu			" Display tab-completion commands above
+set scrolloff=3			" Keep edge of screen away from cursor
+
+" Show invisible characters
+set list
+set listchars=tab:▸\ ,eol:¬
+
+" Keyboard shortcuts
+" * Save on annoying shifting into ex mode
+nnoremap ; :
+" * Change leader
+let mapleader = ","
+" * Make Y behave like other capitals
+map Y y$
+" * Clear highlighting
+nnoremap <leader><space> :noh<cr>
+" * Remap <tab> to act like % in normal mode (switch between opening and
+" * closing braces)
+nnoremap <tab> %
+vnoremap <tab> %
 
 " In insert mode, CTRL-U deletes the current line, while CTRL-W deletes the
 " previous word. Neither of these can be recovered by using Vim undo unless
@@ -30,14 +48,12 @@ inoremap <C-U> <C-G>u<C-U>
 inoremap <C-W> <C-G>u<C-W>
 
 " In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
-endif
+if has('mouse') | set mouse=a | endif
 " Force vim to recoginize mouse
 set ttymouse=xterm2
 
 " Line numbering
-set number
+set relativenumber
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
 
 " Colorscheme selection:
