@@ -170,4 +170,10 @@ let g:tex_flavor='latex'
 imap <C-space> <Plug>IMAP_JumpForward
 
 
+"" ack.vim: detect presence of Ubuntu/Debian ack-grep
+if executable("ack-grep")
+	let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+endif
+
+
 
