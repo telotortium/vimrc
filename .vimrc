@@ -40,6 +40,11 @@ nnoremap <leader><space> :noh<cr>
 " * closing braces)
 nnoremap <tab> %
 vnoremap <tab> %
+" * Allow moving between splits by pressing Ctrl+hjkl
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " In insert mode, CTRL-U deletes the current line, while CTRL-W deletes the
 " previous word. Neither of these can be recovered by using Vim undo unless
