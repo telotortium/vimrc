@@ -165,4 +165,9 @@ set grepprg=grep\ -nH\ $*
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 
+" Remap key to jump to next placeholder to not conflict with the <C-j> mapping
+" above
+imap <C-space> <Plug>IMAP_JumpForward
+
+
 
