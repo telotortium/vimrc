@@ -25,7 +25,7 @@ set scrolloff=3			" Keep edge of screen away from cursor
 
 " Show invisible characters
 set list
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬,trail:·
 
 " Keyboard shortcuts
 " * Save on annoying shifting into ex mode
