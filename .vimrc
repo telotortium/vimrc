@@ -45,6 +45,8 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+" * Select all text in buffer
+map <Leader>a ggVG
 
 " In insert mode, CTRL-U deletes the current line, while CTRL-W deletes the
 " previous word. Neither of these can be recovered by using Vim undo unless
