@@ -76,13 +76,13 @@ let g:myguibg = "dark"
 let g:mytermcolor = g:myguicolor
 let g:zenburn_high_Contrast=1
 execute "colorscheme ".g:mytermcolor
-if has("gui_running") 
+if has("gui_running")
   if has('autocmd')
       augroup colorscheme
       au!
       autocmd BufEnter *
       \   execute "colorscheme ".g:myguicolor." | set background=".g:myguibg |
-      \   au! colorscheme 
+      \   au! colorscheme
       augroup END
   else
   	colorscheme nuvola
@@ -168,7 +168,9 @@ let g:tex_flavor='latex'
 
 " Remap key to jump to next placeholder to not conflict with the <C-j> mapping
 " above
-imap <C-space> <Plug>IMAP_JumpForward
+imap <C-_> <Plug>IMAP_JumpForward
+nmap <C-_> <Plug>IMAP_JumpForward
+vmap <C-_> <Plug>IMAP_JumpForward
 
 
 "" ack.vim: detect presence of Ubuntu/Debian ack-grep
