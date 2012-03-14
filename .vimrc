@@ -149,6 +149,9 @@ else
 	let g:haddock_browser = 'xdg-open'
 endif
 let g:haddock_indexfiledir = g:VIMHOME . '/.haddock_index'
+if system("hostname") == "uhura.rice.edu\n"
+	let g:haddock_docdir = $HOME . "/local/local6/share/doc/ghc/html"
+endif
 
 
 "" SnipMate: Customize author name
