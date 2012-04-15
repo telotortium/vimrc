@@ -22,3 +22,5 @@ let g:Tex_UseUtfMenus=1
 " Map EFE to insert \begin{frame} and \end{frame} for Beamer
 call IMAP('EFE', "\\begin{frame}\<CR> \\frametitle{<++>}\<CR><++>\<CR>\\end{frame}<++>", 'tex')
 
+" Map `w to \omega instead of the default, \wedge
+call IMAP('`w', '\omega', 'tex')
