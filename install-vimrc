@@ -9,3 +9,6 @@ VIMFILES=`pwd`
 # Get all git submodules
 cd "$VIMFILES"
 git submodule update --init
+
+# Create empty directories
+mkdir .haddock_index .undodir
