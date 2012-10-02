@@ -142,6 +142,14 @@ if version >= 703
 	set undoreload=10000 "maximum number of lines to save for undo on a buffer reload
 endif
 
+""" Location of swap files (modified to create from complete path in
+""" non-current directory)
+if has('win32') || has('win64') || has('dos16') || has('dos32')
+	set directory=.,$TEMP//,$SystemDrive/tmp//,$SystemDrive/temp//,C:/tmp//,C:/temp//
+else
+	set directory=.,~/tmp//,/var/tmp//,/tmp//
+endif
+
 "********************"
 "** PLUGIN OPTIONS **"
 "********************"
