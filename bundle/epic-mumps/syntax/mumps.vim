@@ -3,6 +3,11 @@
 " Original Author: Jim Self, jaself@ucdavis.edu (28 April 2001)
 " Other Modifications:
 "  2012-05-09 - *ARB- add spell checking, lots of misc. changes I don't remember
+"  2012-10-02 - *RMI- fix regex typos, document case sensitivity vs.
+"                     insensitivity, add modern test for loaded syntax file,
+"                     add mNumber to mExpr to match numeric literals,
+"                     add zw to mZCommand as well as mIntrFunc (the syntax
+"                     file can tell the difference)
 "
 " TODO:
 " - doArg,gotoArg highlighting
@@ -32,7 +37,7 @@ syn region  mComment	contained start=/;/ end=/$/ contains=mTodo,@Spell
 syn keyword mTodo	contained todo xxx hack
 " Labels are case-sensitive
 syn case match
-syn match   mLabel	contained /^[%A-Z][A-Z0-9]*\|^[0-9]\+/ nextgroup=mFormalArgs
+syn match   mLabel	contained /^[%A-Za-z][A-Za-z0-9]*\|^[0-9]\+/ nextgroup=mFormalArgs
 syn case ignore
 "
 syn region  mFormalArgs	contained oneline start=/(/ end=/)/ contains=mLocalName,","
@@ -43,17 +48,17 @@ syn region  mArgsSeg	contained oneline start=/[ \t]/lc=1 end=/[ \t]\+/ end=/$/ c
 syn match   mLineStart	contained /^[ \t][. \t]*/
 syn match   mLineStart	contained /^[%A-Z][^ \t;]*[. \t]*/ contains=mLabel,mDotLevel
 syn region  mLine	start=/^/ keepend end=/$/ contains=mCmd,mLineStart,mComment
-syn cluster mExpr	contains=mVar,mIntr,mExtr,mString,mParen,mOperator,mBadString,mBadNum,mVRecord
+syn cluster mExpr	contains=mVar,mIntr,mExtr,mString,mNumber,mParen,mOperator,mBadString,mBadNum,mVRecord
 " Variables and labels are case-sensitive, but not intrinsic functions or
 " commands
 syn case match
-syn match   mVar	contained /\^=[%A-Z][A-Z0-9]*/ nextgroup=mSubs
+syn match   mVar	contained /\^\=[%A-Za-z][A-Za-z0-9]*/ nextgroup=mSubs
 syn case ignore
-syn match   mIntr	contained /$[&%A-Z][A-Z0-9]*/ contains=mIntrFunc,mSpecialVar,mExternRef nextgroup=mParams
+syn match   mIntr	contained /\$[&%A-Z][A-Z0-9]*/ contains=mIntrFunc,mSpecialVar,mExternRef nextgroup=mParams
 syn case match
-syn match   mExtr	contained /$$[%A-Z][A-Z0-9]*\(\^[%A-Z][A-Z0-9]*\)\=/ nextgroup=mParams
-syn match   mLocalName	contained /[%A-Z][A-Z0-9]*/
-syn match   mExternRef  contained /$\?&[%A-Z0-9.]\+/
+syn match   mExtr	contained /\$\$[%A-Za-z][A-Za-z0-9]*\(\^[%A-Za-z][A-Za-z0-9]*\)\=/ nextgroup=mParams
+syn match   mLocalName	contained /[%A-Za-z][A-Za-z0-9]*/
+syn match   mExternRef  contained /\$\?&[%A-Za-z0-9.]\+/
 syn case ignore
 "
 
@@ -64,10 +69,10 @@ syn region  mVRecord	contained start=/[= \t,]</lc=1 end=/>/ contains=mLocalName,
 
 " Constants
 syn region  mString 	contained oneline start=/"/ skip=/""/ excludenl end=/"/ oneline contains=@Spell
-syn match   mBadNum	contained /\<0\d+\>/
+syn match   mBadNum	contained /\<0\d\+\>/
 syn match   mBadNum	contained /\<\d*\.\d*0\>/
-syn match   mNumber	contained /\<\d*\.\d{1,9}\>/
-syn match   mNumber	contained /\<\d+\>/
+syn match   mNumber	contained /\<\d*\.\d\+\>/
+syn match   mNumber	contained /\<\d\+\>/
 
 syn region  mParen	contained oneline start=/(/ end=/)/ contains=@mExpr
 syn region  mSubs	contained oneline start=/(/ end=/)/ contains=@mExpr,","
@@ -101,7 +106,7 @@ syn keyword mCommand	contained u use w write x xecute
 "-- Commands: Implementation specific --
 syn keyword mZCommand	contained b break j job o open v view
 syn keyword mZCommand	contained za zallocate zb zbreak zd zdeallocate
-syn keyword mZCommand	contained zp zprint zk zkill zwrite
+syn keyword mZCommand	contained zp zprint zk zkill zw zwrite
 "-- Commands: GT.M specific --
 syn keyword mZCommand	contained zwr
 syn keyword mZCommand	contained zcom zcompile zc zcontinue
