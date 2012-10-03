@@ -40,7 +40,7 @@ syn case match
 syn match   mLabel	contained /^[%A-Za-z][A-Za-z0-9]*\|^[0-9]\+/ nextgroup=mFormalArgs
 syn case ignore
 "
-syn region  mFormalArgs	contained oneline start=/(/ end=/)/ contains=mLocalName,","
+syn region  mFormalArgs	contained oneline start=/(/ end=/)/ contains=mLocalName,",","."
 syn match   mDotLevel	contained /\.[. \t]*/
 syn region  mCmd	contained oneline start=/[A-Z]/ end=/[ \t]/ end=/$/ contains=mCommand,mZCommand,mPostCond,mError nextgroup=mArgsSeg
 syn region  mPostCond	contained oneline start=/:/hs=s+1 end=/[ \t]/re=e-1,he=e-1,me=e-1 end=/$/ contains=@mExpr
@@ -48,15 +48,19 @@ syn region  mArgsSeg	contained oneline start=/[ \t]/lc=1 end=/[ \t]\+/ end=/$/ c
 syn match   mLineStart	contained /^[ \t][. \t]*/
 syn match   mLineStart	contained /^[%A-Z][^ \t;]*[. \t]*/ contains=mLabel,mDotLevel
 syn region  mLine	start=/^/ keepend end=/$/ contains=mCmd,mLineStart,mComment
-syn cluster mExpr	contains=mVar,mIntr,mExtr,mString,mNumber,mParen,mOperator,mBadString,mBadNum,mVRecord
+syn cluster mExpr	contains=mVar,mIntr,mExtr,mString,mNumber,mParen,mIndirExpr,mOperator,mBadString,mBadNum,mVRecord
+syn region  mIndirExpr	start=/@/ end=/@/ oneline contains=@mExpr nextgroup=mSubs
+syn match   mIndirExpr	contained /@/ nextgroup=@mExpr
 " Variables and labels are case-sensitive, but not intrinsic functions or
 " commands
 syn case match
 syn match   mVar	contained /\^\=[%A-Za-z][A-Za-z0-9]*/ nextgroup=mSubs
 syn case ignore
-syn match   mIntr	contained /\$[&%A-Z][A-Z0-9]*/ contains=mIntrFunc,mSpecialVar,mExternRef nextgroup=mParams
+syn match   mIntr	contained /\$[&%A-Z][A-Z0-9]*/ contains=mIntrFunc,mSpecialVar,mExternRef nextgroup=mActualArgs
 syn case match
-syn match   mExtr	contained /\$\$[%A-Za-z][A-Za-z0-9]*\(\^[%A-Za-z][A-Za-z0-9]*\)\=/ nextgroup=mParams
+syn match   mTagRef	contained /\([%A-Za-z][A-Za-z0-9]*\^\|\^\)\=[%A-Za-z][A-Za-z0-9]*/ transparent
+syn match   mSubRef	contained /\(\w\|\^\)\+/ contains=mTagRef nextgroup=mActualArgs
+syn match   mExtr	contained /\$\$\(\w\|\^\)\+/ contains=mTagRef nextgroup=mActualArgs
 syn match   mLocalName	contained /[%A-Za-z][A-Za-z0-9]*/
 syn match   mExternRef  contained /\$\?&[%A-Za-z0-9.]\+/
 syn case ignore
@@ -97,7 +101,13 @@ syn match spellingException "\<\w\+\^[A-Z0-9%]\+" transparent contained containe
 
 " Keyword definitions -------------------
 "-- Commands --
-syn keyword mCommand	contained d do g goto
+" Goto tag
+syn match mCommand	contained /\(g\|goto\) \S/me=e-1 nextgroup=mTagRef
+" Do tag
+syn match mCommand	contained /\(d\|do\) \S/me=e-1 nextgroup=mSubRef
+" Do block
+syn match mCommand	contained /\(d\|do\)\($\|  \+\|\t\)/
+" Other commands
 syn keyword mCommand	contained c close e else f for h halt hang
 syn keyword mCommand	contained i if k kill l lock m merge n new q quit
 syn keyword mCommand	contained r read s set
@@ -151,36 +161,38 @@ syn keyword mSpecialVar	contained zal zallocstor zch zchset zda zdateform zpatn 
 syn keyword mSpecialVar	contained zproc zprocess zq zquit zre zrealstor zus zusedstor
 
 " The default methods for hilighting.  Can be overridden later
-hi! link mCommand	Statement
-hi! link mZCommand	Statement
-hi! link mIntrFunc	Statement
-hi! link mSpecialVar	Statement
-hi! link mLineStart	Statement
-hi! link mLabel	Function
-hi! link mExternRef   Function
-hi! link mFormalArgs	PreProc
-hi! link mDotLevel	PreProc
-hi! link mCmdSeg	Special
-hi! link mPostCond	Special
-hi! link mCmd		Statement
-hi! link mArgsSeg	Special
-hi! link mExpr	PreProc
-hi! link mVar		Identifier
-hi! link mParen	Special
-hi! link mSubs	Special
-hi! link mActualArgs	Special
+hi def link @mCommand	Statement
+hi def link mZCommand	Statement
+hi def link mIntrFunc	Statement
+hi def link mSpecialVar	Statement
+hi def link mLineStart	Statement
+hi def link mLabel	Function
+hi def link mTagRef	Function
+hi def link mSubRef	Function
+hi def link mExternRef   Function
+hi def link mFormalArgs	PreProc
+hi def link mDotLevel	PreProc
+hi def link mCmdSeg	Special
+hi def link mPostCond	Special
+hi def link mCmd		Statement
+hi def link mArgsSeg	Special
+hi def link mExpr	PreProc
+hi def link mVar		Identifier
+hi def link mParen	Special
+hi def link mSubs	Special
+hi def link mActualArgs	Special
 "Change mIntr to Special to not highlight the "$" in "$tr"
-hi! link mIntr	Statement
-hi! link mExtr	Function
-hi! link mString	String
-hi! link mNumber	Number
-hi! link mOperator	Special
-hi! link mComment	Comment
-hi! link mError	Error
-hi! link mBadNum	Error
-hi! link mBadString	Error
-hi! link mBadParen	Error
-hi! link mParenError	Error
-hi! link mTodo	Todo
+hi def link mIntr	Statement
+hi def link mExtr	Function
+hi def link mString	String
+hi def link mNumber	Number
+hi def link mOperator	Special
+hi def link mComment	Comment
+hi def link mError	Error
+hi def link mBadNum	Error
+hi def link mBadString	Error
+hi def link mBadParen	Error
+hi def link mParenError	Error
+hi def link mTodo	Todo
 
 let b:current_syntax = "mumps"
