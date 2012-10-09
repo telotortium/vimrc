@@ -37,32 +37,39 @@ syn region  mComment	contained start=/;/ end=/$/ contains=mTodo,@Spell
 syn keyword mTodo	contained todo xxx hack
 " Labels are case-sensitive
 syn case match
-syn match   mLabel	contained /^[%A-Za-z][A-Za-z0-9]*\|^[0-9]\+/ nextgroup=mFormalArgs
+syn region   mLabel	contained start=/[%[:alpha:]]/ end=/[^[:alnum:]]/me=e-1 contains=mName nextgroup=mFormalArgs
 syn case ignore
 "
 syn region  mFormalArgs	contained oneline start=/(/ end=/)/ contains=mLocalName,",","."
 syn match   mDotLevel	contained /\.[. \t]*/
-syn region  mCmd	contained oneline start=/[A-Z]/ end=/[ \t]/ end=/$/ contains=mCommand,mZCommand,mPostCond,mError nextgroup=mArgsSeg
+syn cluster mCmd	contains=@mGenCmd,mDoCommand,mGoCommand
+syn region  mGenCmd	contained oneline start=/[A-Z]/ end=/[ \t]/ end=/$/ contains=mCommand,mZCommand,mPostCond,mError nextgroup=mArgsSeg
 syn region  mPostCond	contained oneline start=/:/hs=s+1 end=/[ \t]/re=e-1,he=e-1,me=e-1 end=/$/ contains=@mExpr
 syn region  mArgsSeg	contained oneline start=/[ \t]/lc=1 end=/[ \t]\+/ end=/$/ contains=@mExpr,",",mPostCond
 syn match   mLineStart	contained /^[ \t][. \t]*/
-syn match   mLineStart	contained /^[%A-Z][^ \t;]*[. \t]*/ contains=mLabel,mDotLevel
-syn region  mLine	start=/^/ keepend end=/$/ contains=mCmd,mLineStart,mComment
+syn match   mLineStart	contained /^[%[:alpha:]][^ \t;]*[. \t]*/ contains=mLabel,mDotLevel
+syn region  mLine	start=/^/ keepend end=/$/ contains=@mCmd,mLineStart,mComment
 syn cluster mExpr	contains=mVar,mIntr,mExtr,mString,mNumber,mParen,mIndirExpr,mOperator,mBadString,mBadNum,mVRecord
 syn region  mIndirExpr	start=/@/ end=/@/ oneline contains=@mExpr nextgroup=mSubs
 syn match   mIndirExpr	contained /@/ nextgroup=@mExpr
 " Variables and labels are case-sensitive, but not intrinsic functions or
 " commands
 syn case match
-syn match   mVar	contained /\^\=[%A-Za-z][A-Za-z0-9]*/ nextgroup=mSubs
+syn match   mName	contained /[%[:alpha:]]/ nextgroup=mNameBody transparent
+syn match   mNameBody	contained /[[:alnum:]]/ nextgroup=mNameBody transparent
+syn region   mVar	contained start=/[%^[:alpha:]]/ end=/[^[:alnum:]]/me=e-1 contains=mName nextgroup=mSubs
 syn case ignore
-syn match   mIntr	contained /\$[&%A-Z][A-Z0-9]*/ contains=mIntrFunc,mSpecialVar,mExternRef nextgroup=mActualArgs
+syn region   mIntr	contained start=/\$/ end=/[^[:alnum:]]/me=e-1 contains=mIntrFunc,mSpecialVar
 syn case match
-syn match   mTagRef	contained /\([%A-Za-z][A-Za-z0-9]*\^\|\^\)\=[%A-Za-z][A-Za-z0-9]*/ transparent
-syn match   mSubRef	contained /\(\w\|\^\)\+/ contains=mTagRef nextgroup=mActualArgs
-syn match   mExtr	contained /\$\$\(\w\|\^\)\+/ contains=mTagRef nextgroup=mActualArgs
-syn match   mLocalName	contained /[%A-Za-z][A-Za-z0-9]*/
-syn match   mExternRef  contained /\$\?&[%A-Za-z0-9.]\+/
+syn match   mTagRef	contained /[%^[:alpha:]]/me=e-1 nextgroup=mLabelRef transparent
+syn region   mLabelRef  contained start=/[%^[:alpha:]]/ end=/[^[:alnum:]]/re=e-1,he=e-1,me=e-1 contains=mLabel nextgroup=mLabelOffset,mRoutineRef transparent
+syn region   mLabelOffset	contained start=/+/ end=/\(\s\|\^\)/me=e-1 contains=@mExpr nextgroup=mRoutineRef transparent
+syn region   mRoutineRef	contained start=/\^/ end=/[^[:alnum:]]/me=e-1 contains=mName
+syn region   mExternRef	contained start=/&/ end=/[^[:alnum:].]/me=e-1 contains=mSubRef
+syn match   mSubRef	contained /\^.\{-}[^[:alnum:]]/ contains=mRoutineRef nextgroup=mActualArgs
+syn match   mSubRef	contained /[%[:alpha:]].\{-}[^[:alnum:]]/ contains=mLabel nextgroup=mActualArgs
+syn region   mExtr	contained start=/\$\$/ end=/[^[:alnum:]%^]/me=e-1 contains=mTagRef nextgroup=mActualArgs
+syn region  mLocal	contained start=/[%^[:alpha:]]/ end=/[^[:alnum:]]/me=e-1 contains=mName nextgroup=mSubs
 syn case ignore
 "
 
@@ -94,19 +101,19 @@ syn match spellingException "\<\l\+\(\u\|\d\)\+\w*\>" transparent contained cont
 " Mixed case with upper-case starting letter: "NxtLibFnRou" but not "Dispay"
 syn match spellingException "\<\u\+\(\l\|\d\)\+\u\w*\>" transparent contained containedin=mComment,mString contains=@NoSpell
 " Ignore things like "*ARB", "$t", "%ZeLIBCM", "^glo"
-syn match spellingException "[$*\^%][A-Z0-9]\+" transparent contained containedin=mComment,mString contains=@NoSpell
+syn match spellingException "[$*\^%][[:alnum:]]\+" transparent contained containedin=mComment,mString contains=@NoSpell
 " Ignore things like "abc(" or "tag^" or "tag^routine"
 syn match spellingException "\<\w\+("             transparent contained containedin=mComment,mString contains=@NoSpell
-syn match spellingException "\<\w\+\^[A-Z0-9%]\+" transparent contained containedin=mComment,mString contains=@NoSpell
+syn match spellingException "\<\w\+\^[[:alnum:]%]\+" transparent contained containedin=mComment,mString contains=@NoSpell
 
 " Keyword definitions -------------------
 "-- Commands --
 " Goto tag
-syn match mCommand	contained /\(g\|goto\) \S/me=e-1 nextgroup=mTagRef
+syn match mGoCommand	contained /\(g\|goto\) \S/me=e-1 nextgroup=mTagRef
 " Do tag
-syn match mCommand	contained /\(d\|do\) \S/me=e-1 nextgroup=mSubRef
+syn match mDoCommand	contained /\(d\|do\) \S/me=e-1 nextgroup=mSubRef
 " Do block
-syn match mCommand	contained /\(d\|do\)\($\|  \+\|\t\)/
+syn match mDoCommand	contained /\(d\|do\)\($\|  \+\|\t\)/
 " Other commands
 syn keyword mCommand	contained c close e else f for h halt hang
 syn keyword mCommand	contained i if k kill l lock m merge n new q quit
@@ -161,7 +168,9 @@ syn keyword mSpecialVar	contained zal zallocstor zch zchset zda zdateform zpatn 
 syn keyword mSpecialVar	contained zproc zprocess zq zquit zre zrealstor zus zusedstor
 
 " The default methods for hilighting.  Can be overridden later
-hi def link @mCommand	Statement
+hi def link mGoCommand	Statement
+hi def link mDoCommand	Statement
+hi def link mCommand	Statement
 hi def link mZCommand	Statement
 hi def link mIntrFunc	Statement
 hi def link mSpecialVar	Statement
