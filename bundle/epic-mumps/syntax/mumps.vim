@@ -42,13 +42,16 @@ syn case ignore
 "
 syn region  mFormalArgs	contained oneline start=/(/ end=/)/ contains=mLocalName,",","."
 syn match   mDotLevel	contained /\.[. \t]*/
-syn cluster mCmd	contains=@mGenCmd,mDoCommand,mGoCommand
-syn region  mGenCmd	contained oneline start=/[A-Z]/ end=/[ \t]/ end=/$/ contains=mCommand,mZCommand,mPostCond,mError nextgroup=mArgsSeg
+syn region  mCmd	contained oneline start=/[[:alpha:]]/ end=/[\ \t]/ end=/$/ contains=mDoCommand nextgroup=mDoArgsSeg
+syn region  mCmd	contained oneline start=/[[:alpha:]]/ end=/[\ \t]/ end=/$/ contains=mGotoCommand nextgroup=mGotoArgsSeg
+syn region  mCmd	contained oneline start=/[[:alpha:]]/ end=/[ \t]/ end=/$/ contains=mCommand,mZCommand,mPostCond,mError nextgroup=mArgsSeg
 syn region  mPostCond	contained oneline start=/:/hs=s+1 end=/[ \t]/re=e-1,he=e-1,me=e-1 end=/$/ contains=@mExpr
 syn region  mArgsSeg	contained oneline start=/[ \t]/lc=1 end=/[ \t]\+/ end=/$/ contains=@mExpr,",",mPostCond
+syn region  mDoArgsSeg	contained oneline start=/[ \t]/lc=1 end=/[ \t]\+/ end=/$/ contains=@mSubRef,",",mPostCond
+syn region  mGotoArgsSeg	contained oneline start=/[ \t]/lc=1 end=/[ \t]\+/ end=/$/ contains=@mTagRef,",",mPostCond
 syn match   mLineStart	contained /^[ \t][. \t]*/
 syn match   mLineStart	contained /^[%[:alpha:]][^ \t;]*[. \t]*/ contains=mLabel,mDotLevel
-syn region  mLine	start=/^/ keepend end=/$/ contains=@mCmd,mLineStart,mComment
+syn region  mLine	start=/^/ keepend end=/$/ contains=mCmd,mLineStart,mComment
 syn cluster mExpr	contains=mVar,mIntr,mExtr,mString,mNumber,mParen,mIndirExpr,mOperator,mBadString,mBadNum,mVRecord
 syn region  mIndirExpr	start=/@/ end=/@/ oneline contains=@mExpr nextgroup=mSubs
 syn match   mIndirExpr	contained /@/ nextgroup=@mExpr
@@ -107,14 +110,12 @@ syn match spellingException "\<\w\+("             transparent contained containe
 syn match spellingException "\<\w\+\^[[:alnum:]%]\+" transparent contained containedin=mComment,mString contains=@NoSpell
 
 " Keyword definitions -------------------
-"-- Commands --
-" Goto tag
-syn match mGoCommand	contained /\(g\|goto\) \S/me=e-1 nextgroup=mTagRef
-" Do tag
-syn match mDoCommand	contained /\(d\|do\) \S/me=e-1 nextgroup=mSubRef
-" Do block
-syn match mDoCommand	contained /\(d\|do\)\($\|  \+\|\t\)/
-" Other commands
+"-- Commands: specialized for following arguments --
+" Goto
+syn keyword mGotoCommand	contained g goto
+" Do
+syn keyword mDoCommand	contained d do
+"-- Commands: other ANSI-M compatible --
 syn keyword mCommand	contained c close e else f for h halt hang
 syn keyword mCommand	contained i if k kill l lock m merge n new q quit
 syn keyword mCommand	contained r read s set
@@ -168,7 +169,7 @@ syn keyword mSpecialVar	contained zal zallocstor zch zchset zda zdateform zpatn 
 syn keyword mSpecialVar	contained zproc zprocess zq zquit zre zrealstor zus zusedstor
 
 " The default methods for hilighting.  Can be overridden later
-hi def link mGoCommand	Statement
+hi def link mGotoCommand	Statement
 hi def link mDoCommand	Statement
 hi def link mCommand	Statement
 hi def link mZCommand	Statement
