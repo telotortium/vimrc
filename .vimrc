@@ -126,7 +126,11 @@ if has("gui_running")
     if has('win32') || has('win64')
         set guifont=Consolas:h8
 	" Windows doesn't seem to remember window size, so set it manually
-	set lines=49 columns=85
+	if &diff
+		set lines=49 columns=177
+	else
+		set lines=49 columns=85
+	endif
     else
         set guifont=Inconsolata-dz\ 8.5
     endif
