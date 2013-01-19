@@ -31,3 +31,6 @@
 [submodule "bundle/vim-tlib"]
 	path = bundle/vim-tlib
 	url = git://github.com/tomtom/tlib_vim.git
+[submodule "bundle/CSApprox"]
+	path = bundle/CSApprox
+	url = git://github.com/vim-scripts/CSApprox.git
