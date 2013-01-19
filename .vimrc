@@ -83,7 +83,7 @@ if has("gui_running")
             autocmd BufEnter *
                         \   execute "set background=".g:myguibg
                         \   . " | colorscheme ".g:myguicolor
-                        \   au! colorscheme
+                        \   | au! colorscheme
         augroup END
     else
         colorscheme nuvola
