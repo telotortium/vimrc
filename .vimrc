@@ -69,7 +69,7 @@ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
 " work correctly when they're specified from the .vimrc file: the colors are
 " incorrect. Loading the colorscheme again rectifies this for the rest of the
 " time the program is open. Therefore, I use an autocmd to load the
-" colorscheme desired the first time a file is entered in the GUI, after the
+" colorscheme desired the first time a file is entered in the GUI, after which
 " the autocmd can be removed.
 let g:myguicolor = "zenburn"
 let g:myguibg = "dark"
