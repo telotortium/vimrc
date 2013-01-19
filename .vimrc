@@ -74,20 +74,24 @@ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
 let g:myguicolor = "zenburn"
 let g:myguibg = "dark"
 let g:mytermcolor = g:myguicolor
+let g:mytermbg = g:myguibg
 let g:zenburn_high_Contrast=1
-execute "colorscheme ".g:mytermcolor
 if has("gui_running")
     if has('autocmd')
         augroup colorscheme
             au!
             autocmd BufEnter *
-                        \   execute "colorscheme ".g:myguicolor
-                        \ ." | set background=".g:myguibg |
+                        \   execute "set background=".g:myguibg
+                        \   . " | colorscheme ".g:myguicolor
                         \   au! colorscheme
         augroup END
     else
         colorscheme nuvola
     endif
+elseif &t_Co > 255
+    execute "set background=".g:mytermbg." | colorscheme ".g:mytermcolor
+else
+    set colorscheme default
 endif
 
 " Only do this part when compiled with support for autocommands.
