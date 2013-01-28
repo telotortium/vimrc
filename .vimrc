@@ -51,6 +51,10 @@ map <Leader>a ggVG
 inoremap <C-U> <C-G>u<C-U>
 inoremap <C-W> <C-G>u<C-W>
 
+" Use matchit plugin (enables using % to switch between more than just
+" brackets based on the current file type)
+runtime macros/matchit.vim
+
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse') | set mouse=a | endif
 " Force vim to recoginize mouse
