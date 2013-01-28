@@ -55,6 +55,10 @@ inoremap <C-W> <C-G>u<C-W>
 " brackets based on the current file type)
 runtime macros/matchit.vim
 
+" Expand menu as in bash (i.e., complete up to the point of ambiguity and
+" display alternatives)
+set wildmode=list:longest
+
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse') | set mouse=a | endif
 " Force vim to recoginize mouse
