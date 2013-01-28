@@ -29,10 +29,6 @@ set list
 set listchars=tab:▸\ ,eol:¬,trail:·
 
 " Keyboard shortcuts
-" * Save on annoying shifting into ex mode
-nnoremap ; :
-" * Change leader
-let mapleader = ","
 " * Make Y behave like other capitals
 map Y y$
 " * Clear highlighting
