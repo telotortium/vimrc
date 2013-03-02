@@ -209,5 +209,6 @@ if executable("ack-grep")
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 endif
 
-
+" Rust: disable conceal
+let g:no_rust_conceal=1
 
