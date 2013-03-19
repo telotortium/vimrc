@@ -212,3 +212,5 @@ endif
 " Rust: disable conceal
 let g:no_rust_conceal=1
 
+" Map *.md to Markdown
+au BufWinEnter,BufRead,BufNewFile  *.md set filetype=markdown
