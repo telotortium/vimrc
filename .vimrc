@@ -214,3 +214,6 @@ let g:no_rust_conceal=1
 
 " Map *.md to Markdown
 au BufWinEnter,BufRead,BufNewFile  *.md set filetype=markdown
+
+"" Unix shell
+let g:is_posix = 1    " Don't show error for $(...)

@@ -1,6 +1,5 @@
 setlocal tabstop=8 shiftwidth=4 smarttab expandtab softtabstop=4 textwidth=79 formatoptions=croq1t tagrelative
 let &l:tags = &l:tags
-let g:is_posix = 1    " Don't show error for $(...)
 autocmd! * <buffer>
 autocmd BufWritePre <buffer> :%s/\s\+$//e
 autocmd BufWritePost <buffer> silent call system("echo cd " . shellescape(expand('%:p:h')) . "';' ctags-lock --sort=yes -R . '>/dev/null 2>&1' | at now")
