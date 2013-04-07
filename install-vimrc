@@ -11,4 +11,4 @@ cd "$VIMFILES"
 git submodule update --init
 
 # Create empty directories
-mkdir .haddock_index .undodir
+mkdir -p .haddock_index .undodir
