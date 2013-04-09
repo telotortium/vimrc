@@ -167,8 +167,8 @@ endif
 "********************"
 "** PLUGIN OPTIONS **"
 "********************"
-" Haskellmode: Set default browser and Haddock index for documentation
-" browsing
+"" Haskellmode: {{{
+"" Set default browser and Haddock index for documentation browsing
 if has('win32') || has('win64')
     let g:haddock_browser = 'start'
 elseif has('macunix')
@@ -180,15 +180,16 @@ let g:haddock_indexfiledir = g:VIMHOME . '/.haddock_index'
 if system("hostname") == "uhura.rice.edu\n"
     let g:haddock_docdir = $HOME . "/local/local6/share/doc/ghc/html"
 endif
+"" }}}
 
-
-"" SnipMate: Customize author name
+"" SnipMate: {{{
+" Customize author name
 let g:snips_author='Robert Irelan'
+"" }}}
 
-
-"" Vim-LaTeX settings:
+"" Vim-LaTeX: {{{
 " IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
+" search in a single file. This will confuse Latex-Suite. Set your grep
 " program to always generate a file-name.
 set grepprg=grep\ -nH\ $*
 
@@ -202,9 +203,9 @@ let g:tex_flavor='latex'
 imap <C-_> <Plug>IMAP_JumpForward
 nmap <C-_> <Plug>IMAP_JumpForward
 vmap <C-_> <Plug>IMAP_JumpForward
+"" }}}
 
-
-"" Ack configuration:
+"" Ack configuration: {{{
 "" Use ack as grep if available, and also configure ack.vim
 " Detect presence of Ubuntu/Debian ack-grep
 if executable("ack")
@@ -218,12 +219,19 @@ if strlen(s:ack_exe) > 0
     let &g:grepprg = s:ack_exe . ' -H --nocolor --nogroup --column'
     let &g:grepformat = '%f:%l:%c:%m'
 endif
+"" }}}
 
-" Rust: disable conceal
+"" Rust: {{{
+" Disable conceal
 let g:no_rust_conceal=1
+"" }}}
 
+"" Markdown: {{{
 " Map *.md to Markdown
 au BufWinEnter,BufRead,BufNewFile  *.md set filetype=markdown
+"" }}}
 
-"" Unix shell
-let g:is_posix = 1    " Don't show error for $(...)
+"" Unix shell: {{{
+" Don't show error for $(...)
+let g:is_posix = 1
+" }}}
