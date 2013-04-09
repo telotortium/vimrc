@@ -204,9 +204,19 @@ nmap <C-_> <Plug>IMAP_JumpForward
 vmap <C-_> <Plug>IMAP_JumpForward
 
 
-"" ack.vim: detect presence of Ubuntu/Debian ack-grep
-if executable("ack-grep")
-    let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+"" Ack configuration:
+"" Use ack as grep if available, and also configure ack.vim
+" Detect presence of Ubuntu/Debian ack-grep
+if executable("ack")
+    let s:ack_exe="ack"
+elseif executable("ack-grep")
+    let s:ack_exe="ack-grep"
+endif
+
+if strlen(s:ack_exe) > 0
+    let g:ackprg = s:ack_exe . ' -H --nocolor --nogroup --column'
+    let &g:grepprg = s:ack_exe . ' -H --nocolor --nogroup --column'
+    let &g:grepformat = '%f:%l:%c:%m'
 endif
 
 " Rust: disable conceal
