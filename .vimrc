@@ -235,3 +235,13 @@ au BufWinEnter,BufRead,BufNewFile  *.md set filetype=markdown
 " Don't show error for $(...)
 let g:is_posix = 1
 " }}}
+
+"" Netrw: {{{
+" Configuration for Windows using PuTTY
+if has('win32') || has('win64')
+    let g:netrw_cygwin = 0
+    let g:netrw_list_cmd = 'plink HOSTNAME ls -Fa '
+    let g:netrw_scp_cmd = 'pscp -q'
+    let g:netrw_sftp_cmd = 'psftp'
+endif
+"" }}}
