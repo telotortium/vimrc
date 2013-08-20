@@ -214,7 +214,7 @@ elseif executable("ack-grep")
     let s:ack_exe="ack-grep"
 endif
 
-if strlen(s:ack_exe) > 0
+if exists("s:ack_exe") && (s:ack_exe) > 0
     let g:ackprg = s:ack_exe . ' -H --nocolor --nogroup --column'
     let &g:grepprg = s:ack_exe . ' -H --nocolor --nogroup --column'
     let &g:grepformat = '%f:%l:%c:%m'
