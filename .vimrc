@@ -107,8 +107,9 @@ if has("autocmd")
 
         " Change the current working directory of the window in which a
         " file is being edited to the file's directory.
+        " (Do not change it if we're editing a remote file.)
         autocmd BufEnter *
-                    \ if bufname("") !~ "^\[A-Za-z0-9\]*://" |
+                    \ if bufname("") !~ '\v^[A-Za-z0-9]+:[\\/]{2}' |
                     \   lcd %:p:h |
                     \ endif
 
@@ -237,6 +238,7 @@ let g:is_posix = 1
 " }}}
 
 "" Netrw: {{{
+let g:netrw_keepdir = 0
 " Configuration for Windows using PuTTY
 if has('win32') || has('win64')
     let g:netrw_cygwin = 0
