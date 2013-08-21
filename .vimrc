@@ -242,7 +242,8 @@ let g:netrw_keepdir = 0
 " Configuration for Windows using PuTTY
 if has('win32') || has('win64')
     let g:netrw_cygwin = 0
-    let g:netrw_list_cmd = 'plink HOSTNAME ls -Fa '
+    let g:netrw_list_cmd = 'plink USEPORT HOSTNAME ls -Fa '
+    let g:netrw_ssh_cmd = 'plink'
     let g:netrw_scp_cmd = 'pscp -q'
     let g:netrw_sftp_cmd = 'psftp'
 endif
