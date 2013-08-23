@@ -239,12 +239,55 @@ let g:is_posix = 1
 
 "" Netrw: {{{
 let g:netrw_keepdir = 0
-" Configuration for Windows using PuTTY
-if has('win32') || has('win64')
+
+" Auxilliary function to get the value of a Windows shell or environment
+" variable (needed because Vim can't expand environment variable names
+" containing some special characters, such as the `)` in `ProgramFiles(x86)`.
+function s:expand_win32_var(var)
+    let varesc = shellescape(a:var)
+    " The `set` command returns all variables that start with the given name,
+    " so use the shell to grab only the line that contains `var=`, if it
+    " exists.
+    " Tricks:
+    " - The first `[0:-2]` strips the closing quote from `varesc` to add the
+    "   `=` at the end. We also add back the closing quote.
+    " - The second `[0:-2]` strips the trailing newline from the result of
+    "   the shell command.
+    let setout = system('set ' . varesc . ' | find /I ' . varesc[0:-2] . '="')[0:-2]
+    " An empty result means the variable was not found -- we return the empty
+    " string in this case.
+    if len(setout) == 0
+        return ""
+    endif
+    " Since the `set` command prints output of the form `name=value`,
+    " delete everything up to and including the first `=` to get just the
+    " value.
+    return substitute(setout, '\v^.{-}\=', '', '')
+endfunc
+
+" Configuration for Windows using PuTTY or Cygwin
+if has('win32')  " Also true for 64-bit Vim
+    "" Per-system configuration that may need to be customized
     let g:netrw_cygwin = 0
-    let g:netrw_list_cmd = 'plink USEPORT HOSTNAME ls -Fa '
-    let g:netrw_ssh_cmd = 'plink'
-    let g:netrw_scp_cmd = 'pscp -q'
-    let g:netrw_sftp_cmd = 'psftp'
+    let s:cygdir = 'C:\cygwin\'
+    " Get PuTTY's installation directory
+    if has('win64')
+        let s:pf86 = s:expand_win32_var('ProgramFiles(x86)')
+    else
+        let s:pf86 = s:expand_win32_var('ProgramFiles')
+    endif
+    let s:puttydir = s:pf86 . '\PuTTY\'
+    "" End custom configuration
+    if g:netrw_cygwin
+        let g:netrw_list_cmd = shellescape(s:cygdir . '\usr\bin\ssh') . ' USEPORT HOSTNAME ls -Fa '
+        let g:netrw_ssh_cmd = shellescape(s:cygdir . '\usr\bin\ssh')
+        let g:netrw_scp_cmd = shellescape(s:cygdir . '\usr\bin\scp') . ' -q'
+        let g:netrw_sftp_cmd = shellescape(s:cygdir . '\usr\bin\sftp')
+    else
+        let g:netrw_list_cmd = shellescape(s:puttydir . '\plink') . ' USEPORT HOSTNAME ls -Fa '
+        let g:netrw_ssh_cmd = shellescape(s:puttydir . '\plink')
+        let g:netrw_scp_cmd = shellescape(s:puttydir . '\pscp') . ' -q'
+        let g:netrw_sftp_cmd = shellescape(s:puttydir . '\psftp')
+    endif
 endif
 "" }}}
