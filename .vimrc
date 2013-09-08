@@ -95,7 +95,7 @@ if has("gui_running")
 elseif &t_Co > 255
     execute "set background=".g:mytermbg." | colorscheme ".g:mytermcolor
 else
-    set colorscheme default
+    colorscheme default
 endif
 
 " Only do this part when compiled with support for autocommands.
