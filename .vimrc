@@ -188,6 +188,14 @@ endif
 let g:snips_author='Robert Irelan'
 "" }}}
 
+"" Ultisnips: {{{
+" Customize key combinations
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsListSnippets = "<F5>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+"" }}}
+
 "" Vim-LaTeX: {{{
 " IMPORTANT: grep will sometimes skip displaying the file name if you
 " search in a single file. This will confuse Latex-Suite. Set your grep
