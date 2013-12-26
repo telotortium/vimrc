@@ -303,3 +303,12 @@ if has('win32')  " Also true for 64-bit Vim
     endif
 endif
 "" }}}
+
+
+"********************"
+"** LOCAL SETTINGS **
+"********************"
+let s:vimrc_local = $HOME . '/.vimrc.local'
+if filereadable(s:vimrc_local)
+    execute "source " . s:vimrc_local
+endif
