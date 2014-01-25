@@ -51,6 +51,10 @@ map <Leader>a ggVG
 inoremap <C-U> <C-G>u<C-U>
 inoremap <C-W> <C-G>u<C-W>
 
+" Remap space to ex prompt
+nnoremap <space> :
+vnoremap <space> :
+
 " Use matchit plugin (enables using % to switch between more than just
 " brackets based on the current file type)
 runtime macros/matchit.vim
