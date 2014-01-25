@@ -45,6 +45,17 @@ nnoremap <C-l> <C-w>l
 " * Select all text in buffer
 map <Leader>a ggVG
 
+" Close buffer without closing split
+function s:bdelete_DontCloseSplit()
+    " Make sure we can close the buffer if there's no previous buffer
+    if bufnr("#") == bufnr("%")
+        exe "bdelete %"
+    else
+        exe "bprevious | bdelete #"
+    endif
+endfunc
+nnoremap Q :call<space><SID>bdelete_DontCloseSplit()<CR>
+
 " In insert mode, CTRL-U deletes the current line, while CTRL-W deletes the
 " previous word. Neither of these can be recovered by using Vim undo unless
 " CTRL-G u is used to break the undo block created by an insert mode command.
