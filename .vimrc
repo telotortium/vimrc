@@ -55,6 +55,24 @@ inoremap <C-W> <C-G>u<C-W>
 nnoremap <space> :
 vnoremap <space> :
 
+" Break line at cursor position
+"
+" Makes it easier to split the current line into two. Splits the line at the
+" current location, putting you in insert mode on the following newly inserted
+" line. If you're on whitespace, delete it first.
+"
+" Replaces a<C-R> inside a word and sl<C-R> inside whitespace, except that
+" sl<C-R> will not delete all the whitespace if there is more than one
+" whitespace character. In visual mode, equivalent to c<C-R>.
+vnoremap <CR> c<CR>
+function s:DeleteHorizontalSpace()
+    let l:char_here = getline('.')[col('.')-1]
+    if l:char_here =~ '\s'
+        normal diw
+    endif
+endfunc
+nnoremap <CR> :call<space><SID>DeleteHorizontalSpace()<CR>i<CR>
+
 " Use matchit plugin (enables using % to switch between more than just
 " brackets based on the current file type)
 runtime macros/matchit.vim
