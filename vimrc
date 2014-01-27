@@ -99,6 +99,7 @@ set ttymouse=xterm2
 
 " Line numbering
 set relativenumber
+set numberwidth=2
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
 
 " Colorscheme selection:
