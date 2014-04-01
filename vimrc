@@ -33,10 +33,6 @@ set listchars=tab:▸\ ,eol:¬,trail:·
 map Y y$
 " * Clear highlighting
 nnoremap <leader><space> :noh<cr>
-" * Remap <tab> to act like % in normal mode (switch between opening and
-" * closing braces)
-nnoremap <tab> %
-vnoremap <tab> %
 " * Allow moving between splits by pressing Ctrl+hjkl
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -99,6 +95,7 @@ set ttymouse=xterm2
 
 " Line numbering
 set relativenumber
+set numberwidth=2
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
 
 " Colorscheme selection:

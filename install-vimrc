@@ -3,8 +3,8 @@
 # Install .vimrc and .gvimrc in the home directory
 VIMFILES=`pwd`
 [ -d "$HOME" ] && cd "$HOME"
-[ -r "$VIMFILES"/.vimrc ] && ln -sf "$VIMFILES"/.vimrc $HOME/.vimrc
-[ -r "$VIMFILES"/.gvimrc ] && ln -sf "$VIMFILES"/.gvimrc $HOME/.gvimrc
+[ -r "$VIMFILES"/vimrc  ] && ln -sf "$VIMFILES"/vimrc  $HOME/.vimrc
+[ -r "$VIMFILES"/gvimrc ] && ln -sf "$VIMFILES"/gvimrc $HOME/.gvimrc
 
 # Get all git submodules
 cd "$VIMFILES"
