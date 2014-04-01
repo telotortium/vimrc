@@ -9,7 +9,7 @@ autocmd BufEnter <buffer> highlight fortranSerialNumber term=reverse ctermbg=Dar
 " Delete trailing whitespace
 autocmd BufWritePre <buffer> :%s/\s\+$//e
 " Update ctags file
-if has('unix')
+if has('unix') && executable('ctags-lock')
     autocmd BufWritePost <buffer> silent call
         \ system("printf '%s\\n' " . shellescape(
         \   'cd ' . shellescape(expand('%:p:h'))
