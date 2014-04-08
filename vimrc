@@ -15,6 +15,7 @@ set incsearch                   " Do incremental searching
 set showmatch                   " Show matching brackets on insert
 syntax on                       " Syntax highlighting
 filetype plugin indent on       " Filetype detection
+set autoindent                  " Enable autoindent if no indent plugin found
 set backspace=indent,eol,start  " Backspace over everything in insert mode
 set backup                      " Keep a backup file
 set history=50                  " Keep 50 lines of command line history
@@ -149,10 +150,9 @@ if has('autocmd')
     autocmd BufWinEnter * match OverLength /\%>80v.*/
 endif
 
-    " Put these in an autocmd group, so that we can delete them easily.
+if has("autocmd")
     augroup vimrcEx
-        au!
-
+        autocmd!
         " Change the current working directory of the window in which a
         " file is being edited to the file's directory.
         " (Do not change it if we're editing a remote file.)
@@ -160,7 +160,6 @@ endif
                     \ if bufname("") !~ '\v^[A-Za-z0-9]+:[\\/]{2}' |
                     \   lcd %:p:h |
                     \ endif
-
         " When editing a file, always jump to the last known cursor position.
         " Don't do it when the position is invalid or when inside an event
         " handler (happens when dropping a file on gvim).  Also don't do it
@@ -170,14 +169,8 @@ endif
                     \ if line("'\"") > 1 && line("'\"") <= line("$") |
                     \   exe "normal! g`\"" |
                     \ endif
-
     augroup END
-
-else
-
-    set autoindent              " always set autoindenting on
-
-endif " has("autocmd")
+endif
 
 " Other GUI-specific options
 if has("gui_running")
