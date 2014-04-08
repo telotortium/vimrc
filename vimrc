@@ -26,7 +26,7 @@ set laststatus=2                " Alsways show status bar
 
 " Show invisible characters
 set list
-set listchars=tab:▸\ ,eol:¬,trail:·
+set listchars=tab:▸\ ,trail:·,nbsp:·
 
 " Keyboard shortcuts
 " * Make Y behave like other capitals
