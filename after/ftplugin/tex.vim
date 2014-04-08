@@ -1,6 +1,7 @@
 " this is mostly a matter of taste. but LaTeX looks good with just a bit
 " of indentation.
-setlocal tabstop=8 shiftwidth=2 smarttab expandtab softtabstop=2 textwidth=79 formatoptions=croq1t tagrelative
+setlocal tabstop=8 softtabstop=2 shiftwidth=2 smarttab expandtab textwidth=79
+    \ formatoptions=croq1t tagrelative
 setlocal spell spelllang=en_us
 autocmd! * <buffer>
 autocmd BufWritePre <buffer> :%s/\s\+$//e
