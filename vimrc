@@ -113,28 +113,41 @@ let g:mytermbg = g:myguibg
 let g:zenburn_high_Contrast=1
 if has("gui_running")
     if has('autocmd')
-        augroup colorscheme
-            au!
-            autocmd BufEnter *
-                        \   execute "set background=".g:myguibg
-                        \   . " | colorscheme ".g:myguicolor
-                        \   | au! colorscheme
-        augroup END
-    else
-        colorscheme nuvola
+        if g:myguibg == "light"
+            autocmd ColorScheme *
+                    \ highlight OverLength guibg=#FFD9D9 guifg=DarkSlateGray
+        else
+            autocmd ColorScheme *
+                    \ highlight OverLength guibg=#592929
+        endif
     endif
-elseif &t_Co >= 88
-    execute "set background=".g:mytermbg." | colorscheme ".g:mytermcolor
+    execute "set background=" . g:myguibg . " | colorscheme " . g:myguicolor
 else
-    "" Disable annoying message from CSApprox on terminals with few colors --
-    "" the differing colorscheme will be enough of a clue to me that Vim didn't
-    "" detect at least 88 colors.
-    let g:CSApprox_loaded = 1
-    colorscheme default
+    if has('autocmd')
+        if g:myguibg == "light"
+            autocmd ColorScheme *
+                    \ highlight OverLength ctermbg=red ctermfg=white
+        else
+            autocmd ColorScheme *
+                    \ highlight OverLength ctermbg=darkred ctermfg=white
+        endif
+    endif
+    execute "set background=" . g:mytermbg
+    if &t_Co >= 88
+             execute "colorscheme " . g:mytermcolor
+    else
+        "" Disable annoying message from CSApprox on terminals with few colors
+        "" -- the differing colorscheme will be enough of a clue to me that Vim
+        "" didn't detect at least 88 colors.
+        let g:CSApprox_loaded = 1
+        colorscheme default
+    endif
 endif
 
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
+" Show long lines
+if has('autocmd')
+    autocmd BufWinEnter * match OverLength /\%>80v.*/
+endif
 
     " Put these in an autocmd group, so that we can delete them easily.
     augroup vimrcEx
