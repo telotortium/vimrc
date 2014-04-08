@@ -96,7 +96,8 @@ set ttymouse=xterm2
 " Line numbering
 set relativenumber
 set numberwidth=2
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
+autocmd Colorscheme *
+        \ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
 
 " Colorscheme selection:
 " There seems to be a bug in GVim on RedHat systems where colorschemes don't
