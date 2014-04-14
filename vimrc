@@ -112,27 +112,24 @@ let g:myguibg = "dark"
 let g:mytermcolor = g:myguicolor
 let g:mytermbg = g:myguibg
 let g:zenburn_high_Contrast=1
+
+if has('autocmd')
+    augroup colorscheme
+        autocmd!
+        autocmd Colorscheme *
+            \ if &background == "light" |
+                \ highlight OverLength guibg=#FFD9D9 guifg=DarkSlateGray
+                    \ ctermbg=red ctermfg=white |
+            \ else |
+                \ highlight OverLength guibg=#592929
+                    \ ctermbg=darkred ctermfg=white |
+            \ endif
+    augroup END
+endif
+
 if has("gui_running")
-    if has('autocmd')
-        if g:myguibg == "light"
-            autocmd ColorScheme *
-                    \ highlight OverLength guibg=#FFD9D9 guifg=DarkSlateGray
-        else
-            autocmd ColorScheme *
-                    \ highlight OverLength guibg=#592929
-        endif
-    endif
     execute "set background=" . g:myguibg . " | colorscheme " . g:myguicolor
 else
-    if has('autocmd')
-        if g:myguibg == "light"
-            autocmd ColorScheme *
-                    \ highlight OverLength ctermbg=red ctermfg=white
-        else
-            autocmd ColorScheme *
-                    \ highlight OverLength ctermbg=darkred ctermfg=white
-        endif
-    endif
     execute "set background=" . g:mytermbg
     if &t_Co >= 88
              execute "colorscheme " . g:mytermcolor
@@ -146,8 +143,29 @@ else
 endif
 
 " Show long lines
+function! Match_OverLength_getTextwidth()
+    if exists('b:match_OverLength_textwidth')
+        return b:match_OverLength_textwidth
+    elseif exists('g:match_OverLength_textwidth')
+        return g:match_OverLength_textwidth
+    elseif &textwidth > 0
+        return &textwidth
+    endif
+    return 80
+endfunc
+
 if has('autocmd')
-    autocmd BufWinEnter * match OverLength /\%>80v.*/
+    augroup match_OverLength
+        autocmd!
+        autocmd BufWinEnter *
+            \ let b:match_OverLength_id = matchadd('OverLength',
+                \ '\%>' . Match_OverLength_getTextwidth() . 'v.\+')
+        autocmd BufWinLeave *
+            \ if exists('b:match_OverLength_id') &&
+                    \ b:match_OverLength_id > 0 |
+                \ call matchdelete(b:match_OverLength_id) |
+            \ endif
+    augroup END
 endif
 
 if has("autocmd")
