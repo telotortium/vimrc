@@ -43,7 +43,7 @@ nnoremap <C-l> <C-w>l
 map <Leader>a ggVG
 
 " Close buffer without closing split
-function s:bdelete_DontCloseSplit()
+function! s:bdelete_DontCloseSplit()
     " Make sure we can close the buffer if there's no previous buffer
     if bufnr("#") == bufnr("%")
         exe "bdelete %"
@@ -73,7 +73,7 @@ vnoremap <space> :
 " sl<C-R> will not delete all the whitespace if there is more than one
 " whitespace character. In visual mode, equivalent to c<C-R>.
 vnoremap <CR> c<CR>
-function s:DeleteHorizontalSpace()
+function! s:DeleteHorizontalSpace()
     let l:char_here = getline('.')[col('.')-1]
     if l:char_here =~ '\s'
         normal diw
@@ -292,7 +292,7 @@ let g:netrw_keepdir = 0
 " Auxilliary function to get the value of a Windows shell or environment
 " variable (needed because Vim can't expand environment variable names
 " containing some special characters, such as the `)` in `ProgramFiles(x86)`.
-function s:expand_win32_var(var)
+function! s:expand_win32_var(var)
     let varesc = shellescape(a:var)
     " The `set` command returns all variables that start with the given name,
     " so use the shell to grab only the line that contains `var=`, if it
