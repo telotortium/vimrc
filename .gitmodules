@@ -34,9 +34,6 @@
 [submodule "bundle/vim-colors-solarized"]
 	path = bundle/vim-colors-solarized
 	url = git://github.com/altercation/vim-colors-solarized.git
-[submodule "git-repos/rust"]
-	path = git-repos/rust
-	url = git://github.com/mozilla/rust.git
 [submodule "bundle/vim-startify"]
 	path = bundle/vim-startify
 	url = git://github.com/mhinz/vim-startify.git
@@ -49,3 +46,6 @@
 [submodule "bundle/YouCompleteMe"]
 	path = bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe
+[submodule "bundle/rust.vim"]
+	path = bundle/rust.vim
+	url = https://github.com/wting/rust.vim
