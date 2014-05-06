@@ -163,7 +163,7 @@ if has('autocmd')
         autocmd BufWinLeave *
             \ if exists('b:match_OverLength_id') &&
                     \ b:match_OverLength_id > 0 |
-                \ call matchdelete(b:match_OverLength_id) |
+                \ silent! call matchdelete(b:match_OverLength_id) |
             \ endif
     augroup END
 endif
