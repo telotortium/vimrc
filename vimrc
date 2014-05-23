@@ -81,6 +81,19 @@ function! s:DeleteHorizontalSpace()
 endfunc
 nnoremap <CR> :call<space><SID>DeleteHorizontalSpace()<CR>i<CR>
 
+" Capture Vim command output in buffer for easier navigation
+" (<http://vim.wikia.com/wiki/Capture_ex_command_output>).
+function! TabMessage(cmd)
+    redir => message
+    silent execute a:cmd
+    redir END
+    tabnew
+    silent put=message
+    set nomodified
+endfunction
+command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
+command! -nargs=+ -complete=command VO call TabMessage(<q-args>)
+
 " Use matchit plugin (enables using % to switch between more than just
 " brackets based on the current file type)
 runtime macros/matchit.vim
