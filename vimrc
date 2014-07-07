@@ -373,8 +373,10 @@ endif
 "" }}}
 
 "" Slimv: {{{
-" MIT Scheme has builtin SWANK that works.
+" MIT Scheme and Chicken have builtin SWANK that works.
 let g:scheme_builtin_swank = 1
+
+let g:slimv_impl = 'chicken'
 
 let g:slimv_repl_simple_eval = 0
 "" }}}
