@@ -24,6 +24,7 @@ set showcmd                     " Display incomplete commands
 set wildmenu                    " Display tab-completion commands above
 set scrolloff=3                 " Keep edge of screen away from cursor
 set laststatus=2                " Alsways show status bar
+set foldmethod=marker
 
 " Show invisible characters
 set list
