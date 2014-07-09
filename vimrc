@@ -24,6 +24,7 @@ set showcmd                     " Display incomplete commands
 set wildmenu                    " Display tab-completion commands above
 set scrolloff=3                 " Keep edge of screen away from cursor
 set laststatus=2                " Alsways show status bar
+set foldmethod=marker
 
 " Show invisible characters
 set list
@@ -370,8 +371,10 @@ endif
 "" }}}
 
 "" Slimv: {{{
-" MIT Scheme has builtin SWANK that works.
+" MIT Scheme and Chicken have builtin SWANK that works.
 let g:scheme_builtin_swank = 1
+
+let g:slimv_impl = 'chicken'
 
 let g:slimv_repl_simple_eval = 0
 "" }}}

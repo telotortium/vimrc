@@ -57,7 +57,7 @@
 	url = https://github.com/tpope/vim-repeat.git
 [submodule "bundle/slimv"]
 	path = bundle/slimv
-	url = https://github.com/kovisoft/slimv
+	url = git@github.com:telotortium/slimv.git
 [submodule "bundle/django"]
 	path = bundle/django
 	url = https://github.com/vim-scripts/django.vim
