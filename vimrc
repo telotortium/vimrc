@@ -109,8 +109,7 @@ if has('mouse') | set mouse=a | endif
 set ttymouse=xterm2
 
 " Line numbering
-set relativenumber
-set numberwidth=2
+set number relativenumber
 autocmd Colorscheme *
         \ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
 
