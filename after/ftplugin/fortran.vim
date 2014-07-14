@@ -10,6 +10,7 @@ autocmd BufEnter <buffer> highlight fortranSerialNumber term=reverse ctermbg=Dar
 autocmd BufWritePre <buffer> :%s/\s\+$//e
 " Update ctags file
 if has('unix') && executable('ctags-lock')
+            \ && match(expand('%:p:h'), '\%^\w\+:\/\/') == -1  " No cd to URIs
     autocmd BufWritePost <buffer> silent call
         \ system("printf '%s\\n' " . shellescape(
         \   'cd ' . shellescape(expand('%:p:h'))
