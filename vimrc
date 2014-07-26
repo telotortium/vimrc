@@ -31,6 +31,8 @@ set list
 set listchars=tab:▸\ ,trail:·,nbsp:·
 
 " Keyboard shortcuts
+" * Set leader to <space>
+let mapleader = " "
 " * Make Y behave like other capitals
 map Y y$
 " * Clear highlighting
