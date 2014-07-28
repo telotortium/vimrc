@@ -66,10 +66,6 @@ nnoremap Q :call<space><SID>bdelete_DontCloseSplit()<CR>
 inoremap <C-U> <C-G>u<C-U>
 inoremap <C-W> <C-G>u<C-W>
 
-" Remap space to ex prompt
-nnoremap <space> :
-vnoremap <space> :
-
 " Break line at cursor position
 "
 " Makes it easier to split the current line into two. Splits the line at the
