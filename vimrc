@@ -42,9 +42,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-" * Swap : and ;
-noremap ; :
-noremap : ;
+" Easier access to :
 noremap <leader>; :
 noremap <leader>: :
 
@@ -67,10 +65,6 @@ nnoremap Q :call<space><SID>bdelete_DontCloseSplit()<CR>
 " CTRL-G u is used to break the undo block created by an insert mode command.
 inoremap <C-U> <C-G>u<C-U>
 inoremap <C-W> <C-G>u<C-W>
-
-" Remap space to ex prompt
-nnoremap <space> :
-vnoremap <space> :
 
 " Break line at cursor position
 "
