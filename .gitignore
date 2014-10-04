@@ -1,8 +1,10 @@
+/cache/
+
 # Undo directory for persistent undo
-.undodir/
+/.undodir/
 
 # Haskellmode haddock index cache directory
-.haddock_index/
+/.haddock_index/
 
 # Netrw history
-.netrwhist
+/.netrwhist
