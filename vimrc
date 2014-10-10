@@ -181,6 +181,9 @@ if has('autocmd')
     augroup END
 endif
 
+call add(g:match_OverLength_disabled_filetypes, '')
+call add(g:match_OverLength_disabled_filetypes, 'help')
+
 if has("autocmd")
     augroup vimrcEx
         autocmd!
