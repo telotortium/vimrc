@@ -151,17 +151,33 @@ function! Match_OverLength_getTextwidth()
     return 80
 endfunc
 
+let g:match_OverLength_disabled_filetypes = []
+function! Match_OverLength_enable()
+    if !exists('g:match_OverLength_disabled_filetypes') ||
+                \ index(g:match_OverLength_disabled_filetypes, &filetype) == -1
+        call Match_OverLength_force_enable()
+    endif
+endfunc
+
+function! Match_OverLength_force_enable()
+    let b:match_OverLength_id = matchadd('OverLength',
+      \ '\%>' . Match_OverLength_getTextwidth() . 'v.\+')
+endfunc
+
+function! Match_OverLength_disable()
+    if exists('b:match_OverLength_id') &&
+          \ b:match_OverLength_id > 0
+        silent! call matchdelete(b:match_OverLength_id)
+    endif
+endfunc
+
 if has('autocmd')
     augroup match_OverLength
         autocmd!
         autocmd BufWinEnter *
-            \ let b:match_OverLength_id = matchadd('OverLength',
-                \ '\%>' . Match_OverLength_getTextwidth() . 'v.\+')
+            \ call Match_OverLength_enable()
         autocmd BufWinLeave *
-            \ if exists('b:match_OverLength_id') &&
-                    \ b:match_OverLength_id > 0 |
-                \ silent! call matchdelete(b:match_OverLength_id) |
-            \ endif
+            \ call Match_OverLength_disable()
     augroup END
 endif
 
