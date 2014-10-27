@@ -250,11 +250,6 @@ endif
 let g:haddock_indexfiledir = g:VIMHOME . '/.haddock_index'
 "" }}}
 
-"" SnipMate: {{{
-" Customize author name
-let g:snips_author='Robert Irelan'
-"" }}}
-
 "" Ultisnips: {{{
 " Customize key combinations
 let g:UltiSnipsExpandTrigger = "<tab>"
