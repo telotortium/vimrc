@@ -37,11 +37,6 @@ let mapleader = " "
 map Y y$
 " * Clear highlighting
 nnoremap <leader><space> :noh<cr>
-" * Allow moving between splits by pressing Ctrl+hjkl
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
 " Easier access to :
 noremap <leader>; :
 noremap <leader>: :
