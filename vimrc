@@ -251,11 +251,11 @@ let g:haddock_indexfiledir = g:VIMHOME . '/.haddock_index'
 "" }}}
 
 "" Ultisnips: {{{
-" Customize key combinations
-let g:UltiSnipsExpandTrigger = "<tab>"
+" Use bindings that work with YouCompleteMe
+let g:UltiSnipsExpandTrigger = "<c-j>"
 let g:UltiSnipsListSnippets = "<F5>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 "" }}}
 
 "" Vim-LaTeX: {{{
