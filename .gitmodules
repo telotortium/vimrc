@@ -82,6 +82,9 @@
 [submodule "bundle/gundo"]
 	path = bundle/gundo
 	url = https://github.com/sjl/gundo.vim
+[submodule "bundle/vim-go"]
+	path = bundle/vim-go
+	url = https://github.com/fatih/vim-go.git
 [submodule "bundle/vim-bracketed-paste"]
 	path = bundle/vim-bracketed-paste
 	url = https://github.com/ConradIrwin/vim-bracketed-paste
