@@ -135,6 +135,7 @@ else
 endif
 
 " Show long lines
+autocmd ColorScheme * highlight ColorColumn ctermbg=236 guibg=#f0e8e8
 function! Match_OverLength_getTextwidth()
     if exists('b:match_OverLength_textwidth')
         return b:match_OverLength_textwidth
@@ -155,15 +156,14 @@ function! Match_OverLength_enable()
 endfunc
 
 function! Match_OverLength_force_enable()
-    let b:match_OverLength_id = matchadd('OverLength',
-      \ '\%>' . Match_OverLength_getTextwidth() . 'v.\+')
+    execute 'setlocal colorcolumn=' .
+                \ join(map(range(1, 256),
+                \      "Match_OverLength_getTextwidth() + v:val"),
+                \      ",")
 endfunc
 
 function! Match_OverLength_disable()
-    if exists('b:match_OverLength_id') &&
-          \ b:match_OverLength_id > 0
-        silent! call matchdelete(b:match_OverLength_id)
-    endif
+    setlocal colorcolumn&
 endfunc
 
 if has('autocmd')
