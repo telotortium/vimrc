@@ -247,7 +247,7 @@ elseif has('macunix')
 else
     let g:haddock_browser = 'xdg-open'
 endif
-let g:haddock_indexfiledir = g:VIMHOME . '/.haddock_index'
+let g:haddock_indexfiledir = g:VIMHOME . '/.haddock_index/'
 "" }}}
 
 "" Ultisnips: {{{
