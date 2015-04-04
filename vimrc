@@ -178,6 +178,7 @@ endif
 
 call add(g:match_OverLength_disabled_filetypes, '')
 call add(g:match_OverLength_disabled_filetypes, 'help')
+call add(g:match_OverLength_disabled_filetypes, 'markdown')
 
 if has("autocmd")
     augroup vimrcEx
