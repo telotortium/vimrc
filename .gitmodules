@@ -48,7 +48,7 @@
 	url = https://github.com/Valloric/YouCompleteMe
 [submodule "bundle/rust.vim"]
 	path = bundle/rust.vim
-	url = https://github.com/wting/rust.vim
+	url = https://github.com/rust-lang/rust.vim
 [submodule "bundle/vim-surround"]
 	path = bundle/vim-surround
 	url = https://github.com/tpope/vim-surround
