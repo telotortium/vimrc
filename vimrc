@@ -157,7 +157,7 @@ endfunc
 
 function! Match_OverLength_force_enable()
     execute 'setlocal colorcolumn=' .
-                \ join(map(range(1, 256),
+                \ join(map(range(1, 1),
                 \      "Match_OverLength_getTextwidth() + v:val"),
                 \      ",")
 endfunc
