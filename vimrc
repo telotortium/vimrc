@@ -135,7 +135,6 @@ else
 endif
 
 " Show long lines
-autocmd ColorScheme * highlight ColorColumn ctermbg=236 guibg=#f0e8e8
 function! Match_OverLength_getTextwidth()
     if exists('b:match_OverLength_textwidth')
         return b:match_OverLength_textwidth
@@ -165,6 +164,11 @@ endfunc
 function! Match_OverLength_disable()
     setlocal colorcolumn&
 endfunc
+
+" Make column highlighting more subdued in terminal
+if !has("gui_running")
+    autocmd BufEnter * highlight ColorColumn ctermbg=237
+endif
 
 if has('autocmd')
     augroup match_OverLength
