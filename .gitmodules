@@ -97,3 +97,6 @@
 [submodule "bundle/vim-colorscheme-primary"]
 	path = bundle/vim-colorscheme-primary
 	url = https://github.com/google/vim-colorscheme-primary
+[submodule "bundle/vim-visual-star-search"]
+	path = bundle/vim-visual-star-search
+	url = https://github.com/bronson/vim-visual-star-search.git
