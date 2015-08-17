@@ -85,7 +85,9 @@ set wildmode=list:longest
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse') | set mouse=a | endif
 " Force vim to recoginize mouse
-set ttymouse=xterm2
+if !has('nvim')
+    set ttymouse=xterm2
+endif
 
 " Line numbering
 set number relativenumber
