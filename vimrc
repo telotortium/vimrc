@@ -378,6 +378,11 @@ let g:slimv_impl = 'chicken'
 let g:slimv_repl_simple_eval = 0
 "" }}}
 
+"" Jupyter/IPython: {{{
+" Jupyter/IPython notebooks are internally JSON.
+au BufWinEnter,BufRead,BufNewFile  *.ipynb set filetype=json
+"" }}}
+
 "********************"
 "** LOCAL SETTINGS **
 "********************"
