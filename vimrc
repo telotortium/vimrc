@@ -13,7 +13,6 @@ call plug#begin()
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bogado/file-line'
 Plug 'bronson/vim-visual-star-search'
@@ -44,6 +43,22 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/CSApprox'
 Plug 'vim-scripts/django.vim'
+
+function! VimPlugBuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py --clang-completer
+  endif
+endfunction
+
+" Enable disabling the local copy of YCM in favor of a system-installed
+" version.
+if $VIM_NO_LOAD_YCM == ""
+    Plug 'Valloric/YouCompleteMe', { 'do': function('VimPlugBuildYCM') }
+endif
 
 " Local modules
 for path in map(['ColorSamplerPack', 'epic-mumps', 'google-cpp-style',
