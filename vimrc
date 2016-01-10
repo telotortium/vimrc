@@ -67,6 +67,11 @@ for path in map(['ColorSamplerPack', 'epic-mumps', 'google-cpp-style',
     execute printf("Plug '%s/%s'", g:VIMHOME, path)
 endfor
 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Rename directory of fzf.vim to work around
+" https://github.com/google/vim-maktaba/issues/163.
+Plug 'junegunn/fzf.vim', { 'dir': g:VIMHOME . '/plugged/fzf-vim' }
+
 call plug#end()
 
 " Determine if Vim has fully started up to skip actions in the vimrc that can't
