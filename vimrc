@@ -70,7 +70,7 @@ inoremap <C-U> <C-G>u<C-U>
 inoremap <C-W> <C-G>u<C-W>
 
 " Map :E to :Explore to speed up directory exploration
-command E Explore
+command! E Explore
 
 " Capture Vim command output in buffer for easier navigation
 " (<http://vim.wikia.com/wiki/Capture_ex_command_output>).
