@@ -3,11 +3,11 @@
 set -eu
 
 # Set up nvim
-VIMFILES=$(pwd)
 mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
 ln -sf ~/.vim $XDG_CONFIG_HOME/nvim
 
 # Get all git submodules
+: ${VIMFILES:=$(pwd)}
 cd "$VIMFILES"
 git submodule update --init --recursive
 git submodule foreach --recursive 'git checkout master; git pull'
