@@ -22,6 +22,7 @@ Plug 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
 Plug 'google/vim-colorscheme-primary'
 Plug 'honza/vim-snippets'
 Plug 'jceb/vim-orgmode'
+Plug 'lukerandall/haskellmode-vim'
 Plug 'mhinz/vim-signify'
 Plug 'mhinz/vim-startify'
 Plug 'michaeljsmith/vim-indent-object'
@@ -62,7 +63,7 @@ endif
 
 " Local modules
 for path in map(['ColorSamplerPack', 'epic-mumps', 'google-cpp-style',
-            \ 'haskellmode', 'slimv', 'vimhome_cache', 'vim-mediawiki'],
+            \ 'slimv', 'vimhome_cache', 'vim-mediawiki'],
             \ '"bundle/" . v:val')
     execute printf("Plug '%s/%s'", g:VIMHOME, path)
 endfor
