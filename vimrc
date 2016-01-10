@@ -1,11 +1,58 @@
-" Initialize Pathogen
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
-
 " Set g:VIMHOME, the top-level directory of the user's Vim files.
 if !exists('g:VIMHOME')
     let g:VIMHOME=expand("<sfile>:p:h")
 endif
+
+" vim-plugin setup
+if &lines < &columns
+    let g:plug_window = 'topleft new'
+else
+    let g:plug_window = 'vertical topleft new'
+endif
+call plug#begin()
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'SirVer/ultisnips'
+Plug 'Valloric/YouCompleteMe'
+Plug 'altercation/vim-colors-solarized'
+Plug 'bogado/file-line'
+Plug 'bronson/vim-visual-star-search'
+Plug 'ervandew/supertab'
+Plug 'fatih/vim-go'
+Plug 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+Plug 'google/vim-colorscheme-primary'
+Plug 'honza/vim-snippets'
+Plug 'jceb/vim-orgmode'
+Plug 'mhinz/vim-signify'
+Plug 'mhinz/vim-startify'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'mileszs/ack.vim'
+Plug 'mozilla/rust'
+Plug 'nanotech/jellybeans.vim'
+Plug 'rust-lang/rust.vim'
+Plug 'scrooloose/syntastic'
+Plug 'sjl/gundo.vim'
+Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-scripts/CSApprox'
+Plug 'vim-scripts/django.vim'
+
+" Local modules
+for path in map(['ColorSamplerPack', 'epic-mumps', 'google-cpp-style',
+            \ 'haskellmode', 'slimv', 'vimhome_cache', 'vim-mediawiki'],
+            \ '"bundle/" . v:val')
+    execute printf("Plug '%s/%s'", g:VIMHOME, path)
+endfor
+
+call plug#end()
 
 " Determine if Vim has fully started up to skip actions in the vimrc that can't
 " be done after startup.
