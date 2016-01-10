@@ -2,10 +2,9 @@
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
-" Set g:VIMHOME, the top-level directory of the user's Vim files. This should
-" just be the first directory in the runtimepath at startup
+" Set g:VIMHOME, the top-level directory of the user's Vim files.
 if !exists('g:VIMHOME')
-    let g:VIMHOME=pathogen#split(&runtimepath)[0]
+    let g:VIMHOME=expand("<sfile>:p:h")
 endif
 
 " Basic options
