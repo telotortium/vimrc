@@ -7,8 +7,17 @@ if !exists('g:VIMHOME')
     let g:VIMHOME=expand("<sfile>:p:h")
 endif
 
+" Determine if Vim has fully started up to skip actions in the vimrc that can't
+" be done after startup.
+augroup vim_started
+    autocmd!
+    autocmd VimEnter * let g:vim_started = 1
+augroup END
+
 " Basic options
-set encoding=utf-8              " Make UTF-8 the default
+if !exists('g:vim_started')
+    set encoding=utf-8              " Make UTF-8 the default
+end
 set hlsearch                    " Highlight search results
 set incsearch                   " Do incremental searching
 set showmatch                   " Show matching brackets on insert
