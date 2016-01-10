@@ -86,19 +86,10 @@ if !exists('g:vim_started')
     set encoding=utf-8              " Make UTF-8 the default
 end
 set hlsearch                    " Highlight search results
-set incsearch                   " Do incremental searching
 set showmatch                   " Show matching brackets on insert
-syntax on                       " Syntax highlighting
-filetype plugin indent on       " Filetype detection
-set autoindent                  " Enable autoindent if no indent plugin found
-set backspace=indent,eol,start  " Backspace over everything in insert mode
 set backup                      " Keep a backup file
 set history=50                  " Keep 50 lines of command line history
-set ruler                       " Show the cursor position all the time
 set showcmd                     " Display incomplete commands
-set wildmenu                    " Display tab-completion commands above
-set scrolloff=3                 " Keep edge of screen away from cursor
-set laststatus=2                " Alsways show status bar
 set foldmethod=marker
 
 " Show invisible characters
@@ -151,10 +142,6 @@ function! TabMessage(cmd)
 endfunction
 command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 command! -nargs=+ -complete=command VO call TabMessage(<q-args>)
-
-" Use matchit plugin (enables using % to switch between more than just
-" brackets based on the current file type)
-runtime macros/matchit.vim
 
 " Expand menu as in bash (i.e., complete up to the point of ambiguity and
 " display alternatives)
