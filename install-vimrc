@@ -1,8 +1,11 @@
-#!/bin/sh -e
+#!/bin/sh
 
-# Install .vimrc and .gvimrc in the home directory
-VIMFILES=`pwd`
-[ -d "$HOME" ] && cd "$HOME"
+set -eu
+
+# Set up nvim
+VIMFILES=$(pwd)
+mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+ln -sf ~/.vim $XDG_CONFIG_HOME/nvim
 
 # Get all git submodules
 cd "$VIMFILES"
