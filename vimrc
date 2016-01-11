@@ -50,7 +50,7 @@ function! VimPlugBuildYCM(info)
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
   if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer
+    !./install.py --clang-completer --gocode-completer --racer-completer
   endif
 endfunction
 
