@@ -56,6 +56,12 @@ function! VimPlugBuildYCM(info)
   endif
 endfunction
 
+" Tell vim-plug about a manually-managed plugin.
+" TODO: Make string escape logic robust.
+function! s:manual_plug(plugpath)
+    exec printf("Plug '%s'", fnamemodify(a:plugpath, ':p'))
+endfunction
+
 " Enable disabling the local copy of YCM in favor of a system-installed
 " version.
 if $VIM_NO_LOAD_YCM == ""
@@ -66,7 +72,7 @@ endif
 for path in map(['ColorSamplerPack', 'epic-mumps', 'google-cpp-style',
             \ 'slimv', 'vimhome_cache', 'vim-mediawiki'],
             \ '"bundle/" . v:val')
-    execute printf("Plug '%s/%s'", g:VIMHOME, path)
+    call s:manual_plug(printf('%s/%s', g:VIMHOME, path))
 endfor
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
