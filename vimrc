@@ -9,7 +9,10 @@ if &lines < &columns
 else
     let g:plug_window = 'vertical topleft new'
 endif
-call plug#begin()
+" Explicitly specify the location of the "plugged" directory to make vim-plug
+" robust against plugins being inserted into `runtimepath` by various system
+" plugins.
+call plug#begin(g:VIMHOME . '/plugged')
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
