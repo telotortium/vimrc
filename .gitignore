@@ -9,3 +9,6 @@
 # Netrw history
 /.netrwhist
 /plugged
+
+# Old versions of vim-plug
+/autoload/plug.vim.old
