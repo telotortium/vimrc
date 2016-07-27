@@ -168,18 +168,11 @@ autocmd Colorscheme *
         \ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
 
 " Colorscheme selection:
-let g:myguicolor = "pyte"
+let g:myguicolor = "pyte-telotortium"
 let g:myguibg = "light"
 let g:mytermcolor = g:myguicolor
 let g:mytermbg = g:myguibg
 let g:zenburn_high_Contrast=1
-
-" Make comments in Pyte more distinct against the background and other
-" code -- this makes them purple.
-let g:CSApprox_hook_pyte_pre = ['hi Comment gui=italic guifg=#5342B3']
-" Use italics for comments in terminal if possible (checked by testing for the
-" italic terminal option).
-let g:CSApprox_hook_pyte_post = ['hi Comment cterm=italic']
 
 if has('autocmd')
     augroup colorscheme
