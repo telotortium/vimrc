@@ -38,13 +38,14 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-latex/vim-latex'
 Plug 'vim-scripts/CSApprox'
 Plug 'vim-scripts/django.vim'
+if !has('nvim')
+    Plug 'tpope/vim-sensible'
+endif
 
 function! VimPlugBuildYCM(info)
   " info is a dictionary with 3 fields
