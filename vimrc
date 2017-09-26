@@ -367,6 +367,13 @@ if exists("s:ack_exe") && (s:ack_exe) > 0
 endif
 "" }}}
 
+"" Ripgrep configuration: {{{
+"" Use rg as grep if available.
+if executable('rg')
+    set grepprg=rg\ --vimgrep
+endif
+"" }}}
+
 "" Rust: {{{
 " Disable conceal
 let g:no_rust_conceal=1
