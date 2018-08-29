@@ -12,6 +12,13 @@ endif
 " Explicitly specify the location of the "plugged" directory to make vim-plug
 " robust against plugins being inserted into `runtimepath` by various system
 " plugins.
+let s:plug_vim_path = g:VIMHOME . '/autoload/plug.vim'
+if empty(glob(s:plug_vim_path))
+    silent call system("curl -fLo " . shellescape(s:plug_vim_path)
+              \ . " --create-dirs "
+              \ . "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim")
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 call plug#begin(g:VIMHOME . '/plugged')
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Konfekt/FastFold'
