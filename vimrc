@@ -106,6 +106,7 @@ end
 set hlsearch                    " Highlight search results
 set showmatch                   " Show matching brackets on insert
 set backup                      " Keep a backup file
+set hidden
 set history=50                  " Keep 50 lines of command line history
 set showcmd                     " Display incomplete commands
 set foldmethod=marker
