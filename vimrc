@@ -52,6 +52,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-latex/vim-latex'
 Plug 'vim-scripts/django.vim'
+Plug 'vim-scripts/BufOnly.vim'
 if !has('nvim')
     Plug 'tpope/vim-sensible'
 endif
