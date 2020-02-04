@@ -1,3 +1,0 @@
-[submodule "bundle/slimv"]
-	path = bundle/slimv
-	url = git@github.com:telotortium/slimv.git
