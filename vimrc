@@ -175,6 +175,16 @@ if !has('nvim')
     set ttymouse=xterm2
 endif
 
+" Use OSC-52 for copy in terminal
+if !has("gui_running")
+    autocmd TextYankPost *
+                \ if v:event["regname"] == (
+                \    has('clipboard_working') ? "+" : "") |
+                \     silent call system(
+                \         "yank > /dev/tty", v:event["regcontents"]) |
+                \ endif
+endif
+
 " Line numbering
 set number relativenumber
 autocmd Colorscheme *
