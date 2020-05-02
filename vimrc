@@ -33,6 +33,7 @@ Plug 'fatih/vim-go'
 Plug 'google/vim-colorscheme-primary'
 Plug 'jceb/vim-orgmode'
 Plug 'junegunn/seoul256.vim'
+Plug 'lifepillar/vim-gruvbox8'
 Plug 'lukerandall/haskellmode-vim'
 Plug 'mhinz/vim-signify'
 Plug 'mhinz/vim-startify'
@@ -195,8 +196,8 @@ autocmd Colorscheme *
 " Colorscheme selection:
 let g:myguicolor = "pyte-telotortium"
 let g:myguibg = "light"
-let g:mytermcolor = g:myguicolor
-let g:mytermbg = g:myguibg
+let g:mytermcolor = "gruvbox8"
+let g:mytermbg = "dark"
 let g:zenburn_high_Contrast=1
 
 if has('autocmd')
