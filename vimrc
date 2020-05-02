@@ -3,6 +3,8 @@ if !exists('g:VIMHOME')
     let g:VIMHOME=expand("<sfile>:p:h")
 endif
 
+let g:CSApprox_loaded = 1  " Disable CSApprox - it's slow
+
 " vim-plugin setup
 if &lines < &columns
     let g:plug_window = 'topleft new'
