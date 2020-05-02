@@ -62,6 +62,11 @@ if !has('nvim')
     Plug 'tpope/vim-sensible'
 endif
 
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 function! VimPlugBuildYCM(info)
   " info is a dictionary with 3 fields
   " - name:   name of the plugin
