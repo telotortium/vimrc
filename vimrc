@@ -181,12 +181,15 @@ endif
 
 " Use OSC-52 for copy in terminal
 if !has("gui_running")
-    autocmd TextYankPost *
-                \ if v:event["regname"] == (
-                \    has('clipboard_working') ? "+" : "") |
+    augroup osc52yank
+        autocmd!
+        autocmd TextYankPost *
+                \ if !has('nvim') && !has('clipboard_working') &&
+                \         v:event["regname"] =~ '^[+*]\?$' |
                 \     silent call system(
                 \         "yank > /dev/tty", v:event["regcontents"]) |
                 \ endif
+    augroup END
 endif
 
 " Line numbering
