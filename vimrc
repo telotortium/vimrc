@@ -23,7 +23,7 @@ call plug#begin(g:VIMHOME . '/plugged')
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Konfekt/FastFold'
 Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'honza/vim-snippets'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bogado/file-line'
 Plug 'bronson/vim-visual-star-search'
