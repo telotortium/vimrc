@@ -25,12 +25,11 @@ call plug#begin(g:VIMHOME . '/plugged')
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Konfekt/FastFold'
 Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'honza/vim-snippets'
 Plug 'altercation/vim-colors-solarized'
-Plug 'bogado/file-line'
 Plug 'bronson/vim-visual-star-search'
 Plug 'fatih/vim-go'
 Plug 'google/vim-colorscheme-primary'
+Plug 'honza/vim-snippets'
 Plug 'jceb/vim-orgmode'
 Plug 'junegunn/seoul256.vim'
 Plug 'lifepillar/vim-gruvbox8'
@@ -57,8 +56,9 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tweekmonster/startuptime.vim'
 Plug 'vim-latex/vim-latex'
-Plug 'vim-scripts/django.vim'
 Plug 'vim-scripts/BufOnly.vim'
+Plug 'vim-scripts/django.vim'
+Plug 'wsdjeg/vim-fetch'
 if !has('nvim')
     Plug 'tpope/vim-sensible'
 endif
@@ -289,27 +289,37 @@ call add(g:match_OverLength_disabled_filetypes, '')
 call add(g:match_OverLength_disabled_filetypes, 'help')
 call add(g:match_OverLength_disabled_filetypes, 'markdown')
 
-if has("autocmd")
-    augroup vimrcEx
-        autocmd!
-        " Change the current working directory of the window in which a
-        " file is being edited to the file's directory.
-        " (Do not change it if we're editing a remote file.)
-        autocmd BufEnter *
-                    \ if bufname("") !~ '\v^[A-Za-z0-9]+:[\\/]{2}' |
-                    \   lcd %:p:h |
-                    \ endif
-        " When editing a file, always jump to the last known cursor position.
-        " Don't do it when the position is invalid or when inside an event
-        " handler (happens when dropping a file on gvim).  Also don't do it
-        " when the mark is in the first line, that is the default position
-        " when opening a file.
-        autocmd BufReadPost *
-                    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-                    \   exe "normal! g`\"" |
-                    \ endif
-    augroup END
-endif
+" Disabled - breaks vim-fetch from command line
+" (see https://github.com/wsdjeg/vim-fetch/issues/33).
+" if has("autocmd")
+"     augroup vimrcEx
+"         autocmd!
+"         " Change the current working directory of the window in which a
+"         " file is being edited to the file's directory.
+"         " (Do not change it if we're editing a remote file.)
+"         autocmd BufEnter *
+"                     \ if bufname("") !~ '\v^[A-Za-z0-9]+:[\\/]{2}' |
+"                     \   lcd %:p:h |
+"                     \ endif
+"         " When editing a file, always jump to the last known cursor position.
+"         " Don't do it when the position is invalid or when inside an event
+"         " handler (happens when dropping a file on gvim).  Also don't do it
+"         " when the mark is in the first line, that is the default position
+"         " when opening a file.
+"         autocmd BufReadPost *
+"                     \ if line("'\"") > 1 && line("'\"") <= line("$") |
+"                     \   exe "normal! g`\"" |
+"                     \ endif
+"     augroup END
+" endif
+
+" Replace auto-lcd block from above
+" (from https://vimways.org/2019/vim-and-the-working-directory/).
+" 'cd' towards the directory in which the current file is edited
+" but only change the path for the current window
+nnoremap <leader>cd :lcd %:p:h<CR>
+" Open files located in the same dir in with the current file is edited
+nnoremap <leader>ew :e <C-R>=expand("%:.:h") . "/"<CR>
 
 " Other GUI-specific options
 if has("gui_running")
