@@ -331,8 +331,11 @@ if has("gui_running")
         else
             set lines=49 columns=85
         endif
-    else
+    elseif has("gui_gtk2")
         set guifont=Inconsolata-dz\ 8.5
+    elseif has("gui_macvim")
+        " default font of MacVim is fine
+        set guifont=Menlo:h11
     endif
     " Remove toolbar
     set guioptions-=T
