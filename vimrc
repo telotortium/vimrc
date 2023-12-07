@@ -60,6 +60,7 @@ Plug 'vim-scripts/BufOnly.vim'
 Plug 'vim-scripts/django.vim'
 Plug 'wsdjeg/vim-fetch'
 if !has('nvim')
+    Plug 'ojroques/vim-oscyank', {'branch': 'main'}
     Plug 'tpope/vim-sensible'
 endif
 
@@ -185,16 +186,21 @@ if !has('nvim')
     set ttymouse=xterm2
 endif
 
-" Use OSC-52 for copy in terminal
-if !has("gui_running")
-    augroup osc52yank
+if (!has('nvim') && !has('clipboard_working'))
+    " In the event that the clipboard isn't working, it's quite likely that
+    " the + and * registers will not be distinct from the unnamed register. In
+    " this case, a:event.regname will always be '' (empty string). However, it
+    " can be the case that `has('clipboard_working')` is false, yet `+` is
+    " still distinct, so we want to check them all.
+    let s:VimOSCYankPostRegisters = ['', '+', '*']
+    function! s:VimOSCYankPostCallback(event)
+        if a:event.operator == 'y' && index(s:VimOSCYankPostRegisters, a:event.regname) != -1
+            call OSCYankRegister(a:event.regname)
+        endif
+    endfunction
+    augroup VimOSCYankPost
         autocmd!
-        autocmd TextYankPost *
-                \ if !has('nvim') && !has('clipboard_working') &&
-                \         v:event["regname"] =~ '^[+*]\?$' |
-                \     silent call system(
-                \         "yank > /dev/tty", v:event["regcontents"]) |
-                \ endif
+        autocmd TextYankPost * call s:VimOSCYankPostCallback(v:event)
     augroup END
 endif
 
