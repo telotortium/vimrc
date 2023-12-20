@@ -28,6 +28,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'altercation/vim-colors-solarized'
 Plug 'arp242/auto_mkdir2.vim'
 Plug 'bronson/vim-visual-star-search'
+Plug 'dense-analysis/ale'
 Plug 'fatih/vim-go'
 Plug 'google/vim-colorscheme-primary'
 Plug 'google/vim-jsonnet'
@@ -42,7 +43,6 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'mileszs/ack.vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'rust-lang/rust.vim'
-Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'szw/vim-tags'
 Plug 'telotortium/csapprox', { 'branch': 'termguicolors' }
@@ -65,13 +65,6 @@ if !has('nvim')
     Plug 'ojroques/vim-oscyank', {'branch': 'main'}
     Plug 'tpope/vim-sensible'
 endif
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" Support extglob in Bash files
-let g:syntastic_sh_sh_args = "-O extglob -n"
 
 function! VimPlugBuildYCM(info)
   " info is a dictionary with 3 fields
@@ -108,6 +101,10 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim', { 'dir': g:VIMHOME . '/plugged/fzf-vim' }
 
 call plug#end()
+
+" ALE (Syntax checking)
+"" after/ale_linters/sh/shell.vim overrides the 'sh' syntax check to enable
+"" the Bash extglob option.
 
 " Determine if Vim has fully started up to skip actions in the vimrc that can't
 " be done after startup.
