@@ -236,7 +236,10 @@ if has("gui_running")
 else
     execute "set background=" . g:mytermbg
     if &t_Co >= 88
-             execute "colorscheme " . g:mytermcolor
+        if (has("termguicolors"))
+            set termguicolors
+        endif
+        execute "colorscheme " . g:mytermcolor
     else
         "" Disable annoying message from CSApprox on terminals with few colors
         "" -- the differing colorscheme will be enough of a clue to me that Vim
