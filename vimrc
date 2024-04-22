@@ -23,6 +23,7 @@ if empty(glob(s:plug_vim_path))
 endif
 call plug#begin(g:VIMHOME . '/plugged')
 Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'LnL7/vim-nix'
 Plug 'Konfekt/FastFold'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'altercation/vim-colors-solarized'
