@@ -43,6 +43,7 @@ Plug 'mhinz/vim-signify'
 Plug 'mhinz/vim-startify'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'mileszs/ack.vim'
+Plug 'morhetz/gruvbox'
 Plug 'nanotech/jellybeans.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'sjl/gundo.vim'
@@ -213,15 +214,69 @@ autocmd Colorscheme *
         \ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
 
 " Colorscheme selection:
-let g:myguicolor = "pyte-telotortium"
+let g:myguicolor_light = "pyte-telotortium"
+let g:myguicolor_dark = "gruvbox"
 let g:myguibg = "light"
-let g:mytermcolor = "gruvbox8"
+let g:mytermcolor_light = "pyte-telotortium"
+let g:mytermcolor_dark = "gruvbox"
 let g:mytermbg = "dark"
 let g:zenburn_high_Contrast=1
+
+if has("gui_running")
+    if g:myguibg == "light"
+        execute "set background=" . g:myguibg . " | colorscheme " . g:myguicolor_light
+    else
+        execute "set background=" . g:myguibg . " | colorscheme " . g:myguicolor_dark
+    endif
+else
+    execute "set background=" . g:mytermbg
+    if &t_Co >= 88
+        if (has("termguicolors"))
+            set termguicolors
+        endif
+        if g:mytermbg == "light"
+            execute "colorscheme " . g:mytermcolor_light
+        else
+            execute "colorscheme " . g:mytermcolor_dark
+        endif
+    else
+        "" Disable annoying message from CSApprox on terminals with few colors
+        "" -- the differing colorscheme will be enough of a clue to me that Vim
+        "" didn't detect at least 88 colors.
+        let g:CSApprox_loaded = 1
+        colorscheme default
+    endif
+endif
+
+" Function to set Vim's background based on macOS appearance
+function! SetBackgroundBasedOnOS()
+    let background = &background
+    if has("gui_running")
+        if v:os_appearance == 0 || v:os_appearance == 2  " Light mode
+            let background = 'light'
+            execute "colorscheme " . g:myguicolor_light
+        else  " Dark mode
+            let background = 'dark'
+            execute "colorscheme " . g:myguicolor_dark
+        endif
+    elseif $COLORFGBG == "0;15"  " Light mode
+        let background = 'light'
+        execute "colorscheme " . g:mytermcolor_light
+    elseif $COLORFGBG == "15;0"  " Dark mode
+        let background = 'dark'
+        execute "colorscheme " . g:mytermcolor_dark
+    endif
+    execute 'set background=' . background
+    redraw!
+endfunction
+
+" Call the function on Vim startup
+call SetBackgroundBasedOnOS()
 
 if has('autocmd')
     augroup colorscheme
         autocmd!
+        autocmd OSAppearanceChanged * call SetBackgroundBasedOnOS()
         autocmd Colorscheme *
             \ if &background == "light" |
                 \ highlight OverLength guibg=#FFD9D9 guifg=DarkSlateGray
@@ -231,24 +286,6 @@ if has('autocmd')
                     \ ctermbg=darkred ctermfg=white |
             \ endif
     augroup END
-endif
-
-if has("gui_running")
-    execute "set background=" . g:myguibg . " | colorscheme " . g:myguicolor
-else
-    execute "set background=" . g:mytermbg
-    if &t_Co >= 88
-        if (has("termguicolors"))
-            set termguicolors
-        endif
-        execute "colorscheme " . g:mytermcolor
-    else
-        "" Disable annoying message from CSApprox on terminals with few colors
-        "" -- the differing colorscheme will be enough of a clue to me that Vim
-        "" didn't detect at least 88 colors.
-        let g:CSApprox_loaded = 1
-        colorscheme default
-    endif
 endif
 
 " Show long lines
