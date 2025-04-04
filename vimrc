@@ -276,7 +276,9 @@ call SetBackgroundBasedOnOS()
 if has('autocmd')
     augroup colorscheme
         autocmd!
-        autocmd OSAppearanceChanged * call SetBackgroundBasedOnOS()
+        if exists('##OSAppearanceChanged')
+            autocmd OSAppearanceChanged * call SetBackgroundBasedOnOS()
+        endif
         autocmd Colorscheme *
             \ if &background == "light" |
                 \ highlight OverLength guibg=#FFD9D9 guifg=DarkSlateGray
