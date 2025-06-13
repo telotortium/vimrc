@@ -179,6 +179,22 @@ endfunction
 command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 command! -nargs=+ -complete=command VO call TabMessage(<q-args>)
 
+" Detach deletes the current buffer and then immediately opens it.
+" Used to terminate a `gvim --remote-tab-wait-silent` or similar process while
+" continuing to edit the file in GVim.
+function! Detach()
+  " Save the current buffer's filename
+  let l:fname = expand('%:p')
+  echom "Detaching " . l:fname
+  " Close the buffer (detach)
+  bdelete
+  " Re-open the file in a new buffer/tab/window as desired
+  silent! execute 'tabnew '.fnameescape(l:fname)
+  redraw | echom "Detached waiting Vim, reopened " . l:fname
+endfunction
+command! Detach call Detach()
+nnoremap <Leader>d :call Detach()<CR>
+
 " Expand menu as in bash (i.e., complete up to the point of ambiguity and
 " display alternatives)
 set wildmode=list:longest
