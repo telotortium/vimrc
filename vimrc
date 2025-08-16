@@ -26,6 +26,7 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'LnL7/vim-nix'
 Plug 'Konfekt/FastFold'
 Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'altercation/vim-colors-solarized'
 Plug 'arp242/auto_mkdir2.vim'
 Plug 'bronson/vim-visual-star-search'
@@ -233,10 +234,27 @@ autocmd Colorscheme *
 let g:myguicolor_light = "pyte-telotortium"
 let g:myguicolor_dark = "gruvbox"
 let g:myguibg = "light"
-let g:mytermcolor_light = "pyte-telotortium"
-let g:mytermcolor_dark = "gruvbox"
-let g:mytermbg = "dark"
+let g:mytermcolor_light = "PaperColor"
+let g:mytermcolor_dark = "PaperColor"
+let g:mytermbg = "light"
+
+" Colorscheme options
 let g:zenburn_high_Contrast=1
+" In general, in iTerm2 at least, any color scheme that uses a theme background
+" rather than the terminal background will have the nasty side effect of
+" having the background overwrite part of the *primary* screen scrollback
+" buffer after Ctrl-Z or exit. My previous theme 'pyte-telotortium' is where I
+" first noticed this. Make sure that all color schemes picked for the terminal
+" in the future use the Terminal background. In my case, PaperColor works well
+" with my default background colors of white in light mode and black in dark
+" mode.
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'transparent_background': 1
+  \     }
+  \   }
+  \ }
 
 if has("gui_running")
     if g:myguibg == "light"
