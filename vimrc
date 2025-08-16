@@ -256,31 +256,54 @@ let g:PaperColor_Theme_Options = {
   \   }
   \ }
 
-if has("gui_running")
-    if g:myguibg == "light"
-        execute "set background=" . g:myguibg . " | colorscheme " . g:myguicolor_light
-    else
-        execute "set background=" . g:myguibg . " | colorscheme " . g:myguicolor_dark
-    endif
-else
-    execute "set background=" . g:mytermbg
-    if &t_Co >= 88
-        if (has("termguicolors"))
-            set termguicolors
+" In general, in iTerm2 at least, any color scheme that uses a theme background
+" rather than the terminal background will have the nasty side effect of
+" having the background overwrite part of the *primary* screen scrollback
+" buffer after Ctrl-Z or exit. My previous theme 'pyte-telotortium' is where I
+" first noticed this. Make sure that all color schemes picked for the terminal
+" in the future use the Terminal background. In my case, PaperColor works well
+" with my default background colors of white in light mode and black in dark
+" mode.
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'transparent_background': 1
+  \     }
+  \   }
+  \ }
+
+" Function to set colorscheme
+function! SetColorschemeFromBackground(background)
+    let scheme = ""
+    if has("gui_running")
+        if a:background == "light"
+            let scheme = g:myguicolor_light
+        else  " Dark mode
+            let scheme = g:myguicolor_dark
         endif
-        if g:mytermbg == "light"
-            execute "colorscheme " . g:mytermcolor_light
+    else
+        if &t_Co >= 88
+            if (has("termguicolors"))
+                set termguicolors
+            endif
+            if a:background == "light"
+                let scheme = g:mytermcolor_light
+            else  " Dark mode
+                let scheme = g:mytermcolor_dark
+            endif
         else
-            execute "colorscheme " . g:mytermcolor_dark
+            "" Disable annoying message from CSApprox on terminals with few colors
+            "" -- the differing colorscheme will be enough of a clue to me that Vim
+            "" didn't detect at least 88 colors.
+            let g:CSApprox_loaded = 1
         endif
-    else
-        "" Disable annoying message from CSApprox on terminals with few colors
-        "" -- the differing colorscheme will be enough of a clue to me that Vim
-        "" didn't detect at least 88 colors.
-        let g:CSApprox_loaded = 1
-        colorscheme default
     endif
-endif
+    if scheme != ""
+        execute "colorscheme " . scheme
+    endif
+    execute 'set background=' . a:background
+    redraw!
+endfunction
 
 " Function to set Vim's background based on macOS appearance
 function! SetBackgroundBasedOnOS()
@@ -288,23 +311,23 @@ function! SetBackgroundBasedOnOS()
     if has("gui_running")
         if v:os_appearance == 0 || v:os_appearance == 2  " Light mode
             let background = 'light'
-            execute "colorscheme " . g:myguicolor_light
         else  " Dark mode
             let background = 'dark'
-            execute "colorscheme " . g:myguicolor_dark
         endif
     elseif $COLORFGBG == "0;15"  " Light mode
         let background = 'light'
-        execute "colorscheme " . g:mytermcolor_light
     elseif $COLORFGBG == "15;0"  " Dark mode
         let background = 'dark'
-        execute "colorscheme " . g:mytermcolor_dark
     endif
-    execute 'set background=' . background
-    redraw!
+    call SetColorschemeFromBackground(background)
 endfunction
 
-" Call the function on Vim startup
+" Set default backgrounds and then autodetect background and color scheme.
+if has("gui_running")
+    execute 'set background=' . g:myguibg
+else
+    execute 'set background=' . g:mytermbg
+endif
 call SetBackgroundBasedOnOS()
 
 if has('autocmd')
