@@ -106,6 +106,15 @@ Plug 'junegunn/fzf.vim', { 'dir': g:VIMHOME . '/plugged/fzf-vim' }
 
 call plug#end()
 
+" vim-altscreen restores these on VimLeave, but some startup/quit paths can
+" reach the leave handler before VimEnter saved them.
+if !exists('g:altscreen_save_t_ti')
+    let g:altscreen_save_t_ti = &t_ti
+endif
+if !exists('g:altscreen_save_t_te')
+    let g:altscreen_save_t_te = &t_te
+endif
+
 " ALE (Syntax checking)
 "" after/ale_linters/sh/shell.vim overrides the 'sh' syntax check to enable
 "" the Bash extglob option.
