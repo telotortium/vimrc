@@ -202,10 +202,6 @@ set wildmode=list:longest
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse') | set mouse=a | endif
-" Force vim to recoginize mouse
-if !has('nvim')
-    set ttymouse=xterm2
-endif
 
 if (!has('nvim') && !has('clipboard_working'))
     " In the event that the clipboard isn't working, it's quite likely that
