@@ -23,13 +23,14 @@ if empty(glob(s:plug_vim_path))
 endif
 call plug#begin(g:VIMHOME . '/plugged')
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'LnL7/vim-nix'
 Plug 'Konfekt/FastFold'
+Plug 'LnL7/vim-nix'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'altercation/vim-colors-solarized'
 Plug 'arp242/auto_mkdir2.vim'
 Plug 'bronson/vim-visual-star-search'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'dense-analysis/ale'
 Plug 'fatih/vim-go'
 Plug 'fcpg/vim-altscreen'
@@ -620,23 +621,20 @@ au BufWinEnter,BufRead,BufNewFile  *.ipynb set filetype=json
 "" }}}
 
 "" vim-tmux navigation {{{
-" https://www.reddit.com/r/vim/comments/22ixkq/navigate_around_vim_and_tmux_panes_painlessly/cgnnnai
-function! TmuxWincmd(direction)
-  let l:oldwin = winnr()
-  execute 'wincmd ' . a:direction
-  if l:oldwin == winnr()
-    if $TMUX == ''
-      execute '999wincmd ' . tr(a:direction, 'hjkl', 'lkjh')
-    else
-      silent call system('tmux_navigate skipvim ' . a:direction)
-    endif
-  endif
-endfunction
-
-nnoremap <silent> <C-h> :call TmuxWincmd('h')<CR>
-nnoremap <silent> <C-j> :call TmuxWincmd('j')<CR>
-nnoremap <silent> <C-k> :call TmuxWincmd('k')<CR>
-nnoremap <silent> <C-l> :call TmuxWincmd('l')<CR>
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <C-h> :<C-U>TmuxNavigateLeft<CR>
+nnoremap <silent> <C-j> :<C-U>TmuxNavigateDown<CR>
+nnoremap <silent> <C-k> :<C-U>TmuxNavigateUp<CR>
+nnoremap <silent> <C-l> :<C-U>TmuxNavigateRight<CR>
+if !empty($TMUX)
+    function! s:TmuxNavigatorIsFZF()
+        return &ft == 'fzf'
+    endfunction
+    tnoremap <expr> <silent> <C-h> <SID>TmuxNavigatorIsFZF() ? "\<C-h>" : "\<C-w>:\<C-U>TmuxNavigateLeft\<CR>"
+    tnoremap <expr> <silent> <C-j> <SID>TmuxNavigatorIsFZF() ? "\<C-j>" : "\<C-w>:\<C-U>TmuxNavigateDown\<CR>"
+    tnoremap <expr> <silent> <C-k> <SID>TmuxNavigatorIsFZF() ? "\<C-k>" : "\<C-w>:\<C-U>TmuxNavigateUp\<CR>"
+    tnoremap <expr> <silent> <C-l> <SID>TmuxNavigatorIsFZF() ? "\<C-l>" : "\<C-w>:\<C-U>TmuxNavigateRight\<CR>"
+endif
 "" }}}
 
 "********************"
