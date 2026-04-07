@@ -120,6 +120,14 @@ endif
 "" after/ale_linters/sh/shell.vim overrides the 'sh' syntax check to enable
 "" the Bash extglob option.
 let s:python_project_env = g:VIMHOME . '/bin/python-project-env'
+let g:python_typechecker = get(g:, 'python_typechecker', 'auto')
+let g:ale_linters = get(g:, 'ale_linters', {})
+if !has_key(g:ale_linters, 'python')
+    let g:ale_linters['python'] =
+        \ g:python_typechecker ==# 'ty' ||
+        \ (g:python_typechecker ==# 'auto' && executable('ty'))
+        \ ? ['ty'] : ['mypy']
+endif
 let g:ale_python_mypy_executable = s:python_project_env
 let g:ale_python_mypy_options =
     \ 'mypy --disable-error-code=import-untyped --python-executable ' .
