@@ -119,6 +119,14 @@ endif
 " ALE (Syntax checking)
 "" after/ale_linters/sh/shell.vim overrides the 'sh' syntax check to enable
 "" the Bash extglob option.
+let s:python_project_env = g:VIMHOME . '/bin/python-project-env'
+let g:ale_python_mypy_executable = s:python_project_env
+let g:ale_python_mypy_options =
+    \ 'mypy --disable-error-code=import-untyped --python-executable ' .
+    \ shellescape(s:python_project_env)
+
+" YouCompleteMe Python completion and navigation.
+let g:ycm_global_ycm_extra_conf = g:VIMHOME . '/ycm_extra_conf.py'
 
 " Determine if Vim has fully started up to skip actions in the vimrc that can't
 " be done after startup.

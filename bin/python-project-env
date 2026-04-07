@@ -1,0 +1,123 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+venv_names=(.venv env ve venv virtualenv .env)
+
+realpath_dirname() {
+    python3 - "$1" <<'PY'
+import os
+import sys
+
+path = os.path.abspath(sys.argv[1])
+if not os.path.isdir(path):
+    path = os.path.dirname(path)
+print(path)
+PY
+}
+
+find_upward() {
+    local start dir name
+    start=$1
+    name=$2
+    dir=$(realpath_dirname "$start")
+
+    while :; do
+        if [ -e "$dir/$name" ]; then
+            printf '%s\n' "$dir"
+            return 0
+        fi
+
+        [ "$dir" != "/" ] || return 1
+        dir=$(dirname "$dir")
+    done
+}
+
+find_venv_dir() {
+    local start dir venv_name
+    start=$1
+    dir=$(realpath_dirname "$start")
+
+    while :; do
+        for venv_name in "${venv_names[@]}"; do
+            if [ -x "$dir/$venv_name/bin/python" ]; then
+                printf '%s\n' "$dir/$venv_name"
+                return 0
+            fi
+        done
+
+        [ "$dir" != "/" ] || return 1
+        dir=$(dirname "$dir")
+    done
+}
+
+load_workspace_env() {
+    local start envrc_dir old_pwd venv_dir
+    start=$1
+
+    if envrc_dir=$(find_upward "$start" .envrc); then
+        old_pwd=$PWD
+        cd "$envrc_dir"
+
+        if command -v direnv >/dev/null 2>&1; then
+            # Evaluate the same environment Vim would have gotten from opening
+            # a shell in the workspace, without printing direnv's status lines.
+            eval "$(direnv export bash 2>/dev/null)"
+        else
+            # Best-effort fallback for machines without direnv.
+            # shellcheck disable=SC1091
+            . "$envrc_dir/.envrc"
+        fi
+
+        cd "$old_pwd"
+        return 0
+    fi
+
+    if venv_dir=$(find_venv_dir "$start"); then
+        export VIRTUAL_ENV=$venv_dir
+        export PATH=$venv_dir/bin:$PATH
+        return 0
+    fi
+
+    return 1
+}
+
+start=${PYTHON_PROJECT_ENV_START:-$PWD}
+
+case "${1:-}" in
+    --print-project-root)
+        start=${2:-$start}
+        if find_upward "$start" .envrc; then
+            exit 0
+        fi
+        if git -C "$(realpath_dirname "$start")" rev-parse --show-toplevel 2>/dev/null; then
+            exit 0
+        fi
+        realpath_dirname "$start"
+        ;;
+    --print-python)
+        start=${2:-$start}
+        load_workspace_env "$start" >/dev/null || true
+        command -v python
+        ;;
+    --*)
+        printf 'usage: %s [--print-project-root|--print-python] [path]\n' "$0" >&2
+        printf '       %s <tool> [args...]\n' "$0" >&2
+        exit 64
+        ;;
+    -*)
+        load_workspace_env "$start" >/dev/null || true
+        exec python "$@"
+        ;;
+    "")
+        load_workspace_env "$start" >/dev/null || true
+        exec python
+        ;;
+    *)
+        load_workspace_env "$start" >/dev/null || true
+        if [ -f "$1" ] && [[ $1 == *.py ]]; then
+            exec python "$@"
+        fi
+
+        exec "$@"
+        ;;
+esac
